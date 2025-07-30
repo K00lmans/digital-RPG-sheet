@@ -40,6 +40,6 @@
 # debug information files
 *.dwo
 
-# IDE files
+# Personal files
 /cmake-build-release/
 /cmake-build-debug/
