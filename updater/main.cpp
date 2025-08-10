@@ -1,33 +1,32 @@
-#include <pybind11/embed.h>
 #include <string>
-#include <print>
 #include <filesystem>
+#include <iostream>
+#include <curlcpp/curl_easy.h>
+#include <nlohmann/json.hpp>
 
-namespace py = pybind11;
 namespace fs = std::filesystem;
-using std::print;
+using std::cout;
+using std::endl;
 
 std::string VERSION = "test"; // An internal version number to help it know when to update
 
 int main() {
     if (!fs::exists(fs::status("old_updater.exe"))) { // If this exists, then an update was just done
         bool update = false;
-        print("Checking for data folder...\n");
+        cout << "Checking for data folder..." << endl;
         if (!fs::exists(fs::status("data"))) {
-            print("Data folder not found, performing full install...\n");
+            cout << "Data folder not found, performing full install..." << endl;
             update = true;
             fs::create_directory("data");
         } else {
-            print("Data folder found, checking for updates...\n");
-            // python stuff
+            cout << "Data folder found, checking for updates..." << endl;
         }
         if (update) {
-            // update code
-            print("Update installed. ");
+            cout << "Update installed. ";
         }
     } else {
         fs::remove(fs::path("old_updater.exe")); // Removes the outdated version
     }
-    print("Launching character creator...\n");
+    cout << "Launching character creator..." << endl;
     return 0;
 }
