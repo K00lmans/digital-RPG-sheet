@@ -2,7 +2,6 @@
 #define CHAR_CREATOR_H
 
 #include <wx/wx.h>
-#include <memory>
 
 #include "ui_template.h"
 

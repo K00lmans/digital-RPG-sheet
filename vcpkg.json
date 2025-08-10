@@ -6,10 +6,10 @@
     "name" : "wxwidgets",
     "version>=" : "3.2.8.1"
   }, {
-    "name" : "curlcpp",
-    "version>=" : "3.1#1"
-  }, {
     "name" : "nlohmann-json",
     "version>=" : "3.12.0"
+  }, {
+    "name" : "curl",
+    "version>=" : "8.15.0"
   } ]
 }
