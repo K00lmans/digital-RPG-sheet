@@ -69,8 +69,8 @@ struct Health {
 
 class Character {
     std::string name;
-    std::shared_ptr<Attributes> attributes;
-    std::shared_ptr<Skills> skills;
+    std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
+    std::shared_ptr<Skills> skills = std::make_shared<Skills>();
     int extra_attribute_points;
     Health health_info;
     double speed;
