@@ -46,3 +46,5 @@
 /personal_notes.txt
 /.venv/
 /python_install/
+/cmake-build-debug-visual-studio/
+/cmake-build-release-visual-studio/

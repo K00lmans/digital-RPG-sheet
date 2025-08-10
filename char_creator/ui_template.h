@@ -41,104 +41,168 @@ class window : public wxFrame
 		wxTextCtrl* char_name;
 		wxButton* save_button;
 		wxButton* load_button;
-		wxBitmapButton* m_bpButton1711;
+		wxBitmapButton* int_up;
 		wxStaticText* m_staticText361;
-		wxBitmapButton* m_bpButton1811;
+		wxBitmapButton* int_down;
 		wxStaticText* m_staticText1411;
-		wxCheckBox* m_checkBox911;
-		wxBitmapButton* m_bpButton1712;
+		wxCheckBox* int_training;
+		wxBitmapButton* wis_up;
 		wxStaticText* m_staticText362;
-		wxBitmapButton* m_bpButton18111;
-		wxStaticText* m_staticText1412;
-		wxCheckBox* m_checkBox912;
-		wxBitmapButton* m_bpButton17121;
+		wxBitmapButton* wis_down;
+		wxStaticText* wisM;
+		wxCheckBox* wis_training;
+		wxBitmapButton* per_up;
 		wxStaticText* m_staticText363;
-		wxBitmapButton* m_bpButton18112;
+		wxBitmapButton* per_down;
 		wxStaticText* m_staticText1413;
-		wxCheckBox* m_checkBox913;
-		wxBitmapButton* m_bpButton17122;
-		wxStaticText* m_staticText365;
-		wxBitmapButton* m_bpButton18113;
-		wxStaticText* m_staticText1415;
-		wxCheckBox* m_checkBox915;
-		wxBitmapButton* m_bpButton171221;
-		wxStaticText* m_staticText366;
-		wxBitmapButton* m_bpButton18114;
-		wxStaticText* m_staticText1416;
-		wxCheckBox* m_checkBox916;
-		wxBitmapButton* m_bpButton171222;
-		wxStaticText* m_staticText367;
-		wxBitmapButton* m_bpButton18115;
-		wxStaticText* m_staticText1417;
-		wxCheckBox* m_checkBox917;
-		wxBitmapButton* m_bpButton171223;
-		wxStaticText* m_staticText36;
-		wxBitmapButton* m_bpButton18116;
-		wxStaticText* m_staticText141;
-		wxCheckBox* m_checkBox91;
-		wxBitmapButton* m_bpButton171224;
-		wxStaticText* m_staticText364;
-		wxBitmapButton* m_bpButton18117;
-		wxStaticText* m_staticText1414;
-		wxCheckBox* m_checkBox914;
-		wxStaticText* m_staticText34;
-		wxStaticText* m_staticText58;
-		wxStaticText* m_staticText59;
-		wxStaticText* m_staticText60;
-		wxChoice* m_choice3;
-		wxStaticText* m_staticText57;
-		wxStaticText* m_staticText106;
-		wxCheckBox* m_checkBox113;
-		wxCheckBox* m_checkBox114;
+		wxCheckBox* per_training;
+		wxBitmapButton* str_up;
+		wxStaticText* strV;
+		wxBitmapButton* str_down;
+		wxStaticText* strM;
+		wxCheckBox* str_training;
+		wxBitmapButton* pre_up;
+		wxStaticText* preV;
+		wxBitmapButton* pre_down;
+		wxStaticText* preM;
+		wxCheckBox* pre_training;
+		wxBitmapButton* for_up;
+		wxStaticText* forV;
+		wxBitmapButton* for_down;
+		wxStaticText* forM;
+		wxCheckBox* for_training;
+		wxBitmapButton* agi_up;
+		wxStaticText* agiV;
+		wxBitmapButton* agi_down;
+		wxStaticText* agiM;
+		wxCheckBox* agi_training;
+		wxBitmapButton* dex_up;
+		wxStaticText* dexV;
+		wxBitmapButton* dex_down;
+		wxStaticText* dexM;
+		wxCheckBox* dex_training;
+		wxStaticText* remaining_points;
+		wxStaticText* health;
+		wxStaticText* speed;
+		wxStaticText* protection_score;
+		wxChoice* lineages;
+		wxStaticText* lineage_description;
+		wxStaticText* teachingM;
+		wxCheckBox* teaching_training;
+		wxCheckBox* teaching_mastery;
 		wxStaticText* m_staticText1061;
-		wxCheckBox* m_checkBox1131;
-		wxCheckBox* m_checkBox1141;
-		wxStaticText* m_staticText1062;
-		wxCheckBox* m_checkBox1132;
-		wxCheckBox* m_checkBox1142;
-		wxStaticText* m_staticText1063;
-		wxCheckBox* m_checkBox1133;
-		wxCheckBox* m_checkBox1143;
-		wxStaticText* m_staticText1064;
-		wxCheckBox* m_checkBox1134;
-		wxCheckBox* m_checkBox1144;
-		wxStaticText* m_staticText1065;
-		wxCheckBox* m_checkBox1135;
-		wxCheckBox* m_checkBox1145;
-		wxStaticText* m_staticText1066;
-		wxCheckBox* m_checkBox1136;
-		wxCheckBox* m_checkBox1146;
-		wxStaticText* m_staticText1067;
-		wxCheckBox* m_checkBox1137;
-		wxCheckBox* m_checkBox1147;
-		wxStaticText* m_staticText1068;
-		wxCheckBox* m_checkBox1138;
-		wxCheckBox* m_checkBox1148;
-		wxStaticText* m_staticText1069;
-		wxCheckBox* m_checkBox1139;
-		wxCheckBox* m_checkBox1149;
-		wxStaticText* m_staticText10610;
-		wxCheckBox* m_checkBox11310;
-		wxCheckBox* m_checkBox11410;
-		wxStaticText* m_staticText10611;
-		wxCheckBox* m_checkBox11311;
-		wxCheckBox* m_checkBox11411;
-		wxStaticText* m_staticText10612;
-		wxCheckBox* m_checkBox11312;
-		wxCheckBox* m_checkBox11412;
-		wxStaticText* m_staticText10613;
-		wxCheckBox* m_checkBox11313;
-		wxCheckBox* m_checkBox11413;
-		wxStaticText* m_staticText70;
-		wxCheckBox* m_checkBox43;
-		wxCheckBox* m_checkBox44;
+		wxCheckBox* doctoring_training;
+		wxCheckBox* doctoring_mastery;
+		wxStaticText* intimidationM;
+		wxCheckBox* intimidation_training;
+		wxCheckBox* intimidation_mastery;
+		wxStaticText* performanceM;
+		wxCheckBox* performance_training;
+		wxCheckBox* performance_mastery;
+		wxStaticText* acrobaticsM;
+		wxCheckBox* acrobatics_trained;
+		wxCheckBox* acrobatics_mastered;
+		wxStaticText* supernatralismM;
+		wxCheckBox* supernatralism_training;
+		wxCheckBox* supernatralism_mastery;
+		wxStaticText* survivalM;
+		wxCheckBox* survival_training;
+		wxCheckBox* survival_mastery;
+		wxStaticText* historyM;
+		wxCheckBox* history_training;
+		wxCheckBox* history_mastery;
+		wxStaticText* negotiationM;
+		wxCheckBox* negotiation_training;
+		wxCheckBox* negotiation_mastery;
+		wxStaticText* athleticsM;
+		wxCheckBox* athletics_training;
+		wxCheckBox* athletics_mastery;
+		wxStaticText* investigationM;
+		wxCheckBox* investigation_training;
+		wxCheckBox* investigation_mastery;
+		wxStaticText* stealthM;
+		wxCheckBox* stealth_training;
+		wxCheckBox* stealth_mastery;
+		wxStaticText* SoHM;
+		wxCheckBox* SoH_training;
+		wxCheckBox* SoH_mastery;
+		wxStaticText* mechanicalM;
+		wxCheckBox* mechanical_training;
+		wxCheckBox* mechanical_mastery;
+		wxStaticText* insightM;
+		wxCheckBox* insight_training;
+		wxCheckBox* insight_mastery;
 		wxStaticText* m_staticText95;
-		wxChoice* m_choice6;
-		wxCheckBox* m_checkBox95;
-		wxChoice* m_choice7;
-		wxCheckBox* m_checkBox96;
-		wxChoice* m_choice31;
-		wxStaticText* m_staticText571;
+		wxChoice* weapon;
+		wxCheckBox* weapon_training;
+		wxChoice* armor;
+		wxCheckBox* armor_training;
+		wxChoice* backgrounds;
+		wxStaticText* background_description;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void save( wxCommandEvent& event ) { event.Skip(); }
+		virtual void load( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_int( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_int( wxCommandEvent& event ) { event.Skip(); }
+		virtual void train_int( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_wis( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_wis( wxCommandEvent& event ) { event.Skip(); }
+		virtual void wis_trained( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_per( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_per( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_str( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_str( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_str( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_pre( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_pre( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_pre( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_for( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_for( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_for( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_agi( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_agi( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_agi( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_dec( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_dex( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_dex( wxCommandEvent& event ) { event.Skip(); }
+		virtual void lineage_selected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_teaching( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_teaching( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_doctoring( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_doctoring( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_intimidation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_intimidation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_performance( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_performance( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_acrobatics( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_acrobatics( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_supernatralism( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_supernatralism( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_survival( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_survival( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_history( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_history( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_negotiation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_negotiation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_athletics( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_athletics( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_investigation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_investigation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_stealth( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_stealth( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_SoH( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_SoH( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_mechanical( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_mechanical( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_insight( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_insight( wxCommandEvent& event ) { event.Skip(); }
+		virtual void weapon_chosen( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_weapon( wxCommandEvent& event ) { event.Skip(); }
+		virtual void armor_chosen( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_armor( wxCommandEvent& event ) { event.Skip(); }
+		virtual void background_selected( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 

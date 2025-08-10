@@ -1,17 +1,16 @@
 #include <string>
 #include <filesystem>
-#include <iostream>
+#include <print>
 #include <nlohmann/json.hpp>
 #include <memory>
 #include "Curl_Handler.h"
 
 namespace fs = std::filesystem;
-using std::cout;
-using std::endl;
+using std::println;
 using nlohmann::json;
 using CH = Curl_Handler;
 
-std::string VERSION = "test"; // An internal version number to help it know when to update
+std::string VERSION = "0.1.0"; // An internal version number to help it know when to update
 
 int main() {
     curl_global_init(CURL_GLOBAL_DEFAULT);
@@ -20,7 +19,7 @@ int main() {
     github_connector->custom_setting_change(CURLOPT_USERAGENT, "updater");
     json github_data;
     if (!github_connector->make_request()) {
-        cout << github_connector->get_last_result() << endl;
+        println("{}", static_cast<int>(github_connector->get_last_result()));
     } else {
         github_data = json::parse(github_connector->data);
         github_connector.reset();
@@ -28,26 +27,32 @@ int main() {
 
     if (!fs::exists(fs::status("old_updater.exe"))) { // If this exists, then an update was just done
         bool update = false;
-        cout << "Checking for data folder..." << endl;
+        println("Checking for data folder...");
         if (!fs::exists(fs::status("data"))) {
-            cout << "Data folder not found, performing full install..." << endl;
+            println("Data folder not found, performing full install...");
             update = true;
             fs::create_directory("data");
+            fs::create_directory("saves");
         } else {
-            cout << "Data folder found, checking for updates..." << endl;
+            println("Data folder found, checking for updates...");
             if (github_data.find("name").value() != VERSION) {
                 update = true;
-                cout << "Update is available. Starting update..." << endl;
+                println("Update is available. Starting update...");
+            } else {
+                println("No update found, you are using the latest version, {}", VERSION);
             }
         }
         if (update) {
-            cout << "Update installed." << endl;
+            fs::rename("updater.exe", "old_updater.exe");
+            println("Update installed. Restarting...");
+            system("start updater.exe");
             return 0;
         }
     } else {
         fs::remove(fs::path("old_updater.exe")); // Removes the outdated version
+        println("Successfully restarted after updating to {}", VERSION);
     }
-    cout << "Launching character creator..." << endl;
+    println("Launching character creator...");
     // system("start data/char_creator.exe");
 
     curl_global_cleanup();

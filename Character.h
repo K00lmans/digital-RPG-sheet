@@ -1,0 +1,83 @@
+/*
+ *This object stores all the data relating to a character sheet
+ */
+
+#ifndef RPG_SHEET_CHARACTER_H
+#define RPG_SHEET_CHARACTER_H
+
+#include <optional>
+#include <memory>
+#include <string>
+
+using std::optional;
+
+enum Armor_Class {
+    NONE,
+    LIGHT,
+    MEDIUM,
+    HEAVY
+};
+
+enum Training_Level {
+    UNTRAINED,
+    TRAINED,
+    EXPERT
+};
+
+// Attributes and skills have several elements inside of them, this struct contains all those values
+struct Stat {
+    int modifier;
+    Training_Level training_level;
+    int training_points;
+    optional<int> value; // Skills do not have a value
+};
+
+struct Attributes {
+    Stat intelligence;
+    Stat wisdom;
+    Stat perception;
+    Stat strength;
+    Stat presence;
+    Stat fortitude;
+    Stat agility;
+    Stat dexterity;
+};
+
+struct Skills {
+    Stat teaching;
+    Stat doctoring;
+    Stat intimidation;
+    Stat performance;
+    Stat acrobatics;
+    Stat supernaturalism;
+    Stat survival;
+    Stat history;
+    Stat negotiation;
+    Stat athletics;
+    Stat investigation;
+    Stat stealth;
+    Stat sleight_of_hand;
+    Stat mechanical;
+    Stat insight;
+};
+
+struct Health {
+    int current_health;
+    int max_health;
+    int temp_health;
+};
+
+class Character {
+    std::string name;
+    std::shared_ptr<Attributes> attributes;
+    std::shared_ptr<Skills> skills;
+    int extra_attribute_points;
+    Health health_info;
+    double speed;
+    Armor_Class armor_class;
+
+public:
+    Character(); // Assumes default values
+};
+
+#endif //RPG_SHEET_CHARACTER_H

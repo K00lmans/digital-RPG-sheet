@@ -4,10 +4,13 @@
 #include <wx/wx.h>
 
 #include "ui_template.h"
+#include "../Character.h"
 
 class Char_Creator final : public wxApp {
 public:
     bool OnInit() override;
+
+    Character data = Character();
 };
 
 class UI final : public window {

@@ -3,6 +3,8 @@ add_executable(char_creator WIN32
         ui_template.h
         char_creator.cpp
         char_creator.h
+        ../Character.cpp
+        ../Character.h
 )
 
 find_package(wxWidgets CONFIG REQUIRED)
