@@ -44,6 +44,16 @@ int main() {
         }
         if (update) {
             fs::rename("updater.exe", "old_updater.exe");
+            json files = github_data["assets"];
+            auto github_downloader = std::make_unique<CH>("");
+            github_downloader->custom_setting_change(CURLOPT_USERAGENT, "updater");
+            for (auto file : files) {
+                if (file.find("name").value() == "updater.zip") {
+                    github_downloader->change_URL(file.find("browser_download_url").value());
+                } else if (file.find("name").value() == "char_creator.zip") {
+                    github_downloader->change_URL(file.find("browser_download_url").value());
+                }
+            }
             println("Update installed. Restarting...");
             system("start updater.exe");
             return 0;
