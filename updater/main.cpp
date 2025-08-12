@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <print>
 #include <nlohmann/json.hpp>
-#include <memory>
 #include "Curl_Handler.h"
 
 namespace fs = std::filesystem;
@@ -13,19 +12,16 @@ using CH = Curl_Handler;
 std::string VERSION = "0.1.0"; // An internal version number to help it know when to update
 
 int main() {
-    curl_global_init(CURL_GLOBAL_DEFAULT);
-
-    auto github_connector = std::make_unique<CH>("https://api.github.com/repos/K00lmans/digital-RPG-sheet/releases/latest");
-    github_connector->custom_setting_change(CURLOPT_USERAGENT, "updater");
-    json github_data;
-    if (!github_connector->make_request()) {
-        println("{}", static_cast<int>(github_connector->get_last_result()));
-    } else {
-        github_data = json::parse(github_connector->data);
-        github_connector.reset();
+    CH github_connector("updater", "https://api.github.com/repos/K00lmans/digital-RPG-sheet/releases/latest");
+    if (!github_connector.make_request()) {
+        println("{}: {}", static_cast<int>(github_connector.last_error.curl_result),
+                github_connector.last_error.error_message);
+        return 1;
     }
+    json github_data = json::parse(github_connector.data);
 
-    if (!fs::exists(fs::status("old_updater.exe"))) { // If this exists, then an update was just done
+    if (!fs::exists(fs::status("old_updater.exe"))) {
+        // If this exists, then an update was just done
         bool update = false;
         println("Checking for data folder...");
         if (!fs::exists(fs::status("data"))) {
@@ -45,15 +41,7 @@ int main() {
         if (update) {
             fs::rename("updater.exe", "old_updater.exe");
             json files = github_data["assets"];
-            auto github_downloader = std::make_unique<CH>("");
-            github_downloader->custom_setting_change(CURLOPT_USERAGENT, "updater");
-            for (auto file : files) {
-                if (file.find("name").value() == "updater.zip") {
-                    github_downloader->change_URL(file.find("browser_download_url").value());
-                } else if (file.find("name").value() == "char_creator.zip") {
-                    github_downloader->change_URL(file.find("browser_download_url").value());
-                }
-            }
+            github_connector.reset_settings("updater");
             println("Update installed. Restarting...");
             system("start updater.exe");
             return 0;
@@ -63,8 +51,6 @@ int main() {
         println("Successfully restarted after updating to {}", VERSION);
     }
     println("Launching character creator...");
-    // system("start data/char_creator.exe");
-
-    curl_global_cleanup();
+    system("start data/char_creator.exe");
     return 0;
 }
