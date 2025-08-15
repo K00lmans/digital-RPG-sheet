@@ -1,7 +1,7 @@
-#include <string>
 #include <filesystem>
 #include <print>
 #include <nlohmann/json.hpp>
+#include <fstream>
 #include "Curl_Handler.h"
 
 namespace fs = std::filesystem;
@@ -9,13 +9,11 @@ using std::println;
 using nlohmann::json;
 using CH = Curl_Handler;
 
-std::string VERSION = "0.1.0"; // An internal version number to help it know when to update
-
 int main() {
     CH github_connector("updater", "https://api.github.com/repos/K00lmans/digital-RPG-sheet/releases/latest");
     if (!github_connector.make_request()) {
-        println("{}: {}", static_cast<int>(github_connector.last_error.curl_result),
-                github_connector.last_error.error_message);
+        println("{}: {}", static_cast<int>(github_connector.get_error().curl_result),
+                github_connector.get_error().error_message);
         return 1;
     }
     json github_data = json::parse(github_connector.data);
@@ -43,7 +41,7 @@ int main() {
             json files = github_data["assets"];
             github_connector.reset_settings("updater");
             println("Update installed. Restarting...");
-            system("start updater.exe");
+            // system("start updater.exe");
             return 0;
         }
     } else {

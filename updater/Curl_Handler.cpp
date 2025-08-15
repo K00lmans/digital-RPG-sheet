@@ -1,7 +1,9 @@
 #include "Curl_Handler.h"
 
 Curl_Handler::~Curl_Handler() {
-    curl_easy_cleanup(handle);
+    if (handle) {
+        curl_easy_cleanup(handle);
+    }
     curl_global_cleanup();
 }
 
@@ -24,11 +26,19 @@ void Curl_Handler::custom_setting_change(const CURLoption setting, const string 
     curl_easy_setopt(handle, setting, value.c_str());
 }
 
+void Curl_Handler::custom_setting_change(const CURLoption setting, const long value) const {
+    curl_easy_setopt(handle, setting, value);
+}
+
 void Curl_Handler::reset_settings(const string &agent_name, const string& new_URL) const {
     curl_easy_reset(handle);
     change_URL(new_URL);
     curl_easy_setopt(handle, CURLOPT_USERAGENT, agent_name.c_str());
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, return_data);
+    curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, last_error.error_message);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data);
-    curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, last_error.error_message.c_str());
+}
+
+Error Curl_Handler::get_error() const {
+    return last_error;
 }
