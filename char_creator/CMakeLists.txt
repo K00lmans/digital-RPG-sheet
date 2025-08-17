@@ -5,6 +5,7 @@ add_executable(char_creator WIN32
         char_creator.h
         ../Character.cpp
         ../Character.h
+        ../handy_stuff.h
 )
 
 find_package(wxWidgets CONFIG REQUIRED)

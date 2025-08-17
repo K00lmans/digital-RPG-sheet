@@ -18,8 +18,8 @@ void Curl_Handler::change_URL(const string &new_URL) const {
 }
 
 bool Curl_Handler::make_request() {
-    last_error.curl_result = curl_easy_perform(handle);
-    return !last_error.curl_result; // 0 is the value of a success
+    last_error.error_code = curl_easy_perform(handle);
+    return !last_error.error_code; // 0 is the value of a success
 }
 
 void Curl_Handler::custom_setting_change(const CURLoption setting, const string &value) const {
@@ -35,10 +35,10 @@ void Curl_Handler::reset_settings(const string &agent_name, const string& new_UR
     change_URL(new_URL);
     curl_easy_setopt(handle, CURLOPT_USERAGENT, agent_name.c_str());
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, return_data);
-    curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, last_error.error_message);
+    curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, last_error.buffer);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data);
 }
 
-Error Curl_Handler::get_error() const {
+Error<CURLcode, char[CURL_ERROR_SIZE]> Curl_Handler::get_error() const {
     return last_error;
 }

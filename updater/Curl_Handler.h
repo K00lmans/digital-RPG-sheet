@@ -3,6 +3,7 @@
 
 #include <curl/curl.h>
 #include <string>
+#include "../handy_stuff.h"
 
 using std::string;
 
@@ -12,12 +13,6 @@ static size_t return_data(const char *data, const size_t data_size, const size_t
     return data_size * amount_of_data;
 }
 
-// A one-stop variable to store all the info if something goes wrong.
-struct Error {
-    CURLcode curl_result = CURLE_OK;
-    char error_message[CURL_ERROR_SIZE] = ""; // If it's a string, it causes so many issues
-};
-
 /*
 A personal object to handle libcurl because I don't wanna have to remember to manage C shenanigans I don't
 understand and I did not understand how the existing ones worked, so here is my own crappy one.
@@ -26,7 +21,7 @@ You must call the startup and shutdown functions at program start and end. Defau
  */
 class Curl_Handler {
     CURL *handle = nullptr;
-    Error last_error;
+    Error<CURLcode, char[CURL_ERROR_SIZE]> last_error;
 
 public:
     explicit Curl_Handler(const string &agent_name, const string &URL = "");
@@ -43,7 +38,7 @@ public:
 
     void reset_settings(const string &agent_name, const string &new_URL = "") const;
 
-    [[nodiscard]] Error get_error() const;
+    [[nodiscard]] Error<CURLcode, char[CURL_ERROR_SIZE]> get_error() const;
 
     string data;
 };

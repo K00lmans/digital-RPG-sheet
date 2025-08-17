@@ -8,8 +8,10 @@
 #include <optional>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 using std::optional;
+using std::string;
 
 enum Armor_Class {
     NONE,
@@ -75,6 +77,8 @@ class Character {
     Health health_info;
     double speed;
     Armor_Class armor_class;
+    string lineage;
+    string background;
 
 public:
     Character(); // Assumes default values

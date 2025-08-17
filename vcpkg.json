@@ -11,5 +11,8 @@
   }, {
     "name" : "curl",
     "version>=" : "8.15.0"
+  }, {
+    "name" : "libzip",
+    "version>=" : "1.11.4"
   } ]
 }
