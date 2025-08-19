@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 #include "Curl_Handler.h"
+#include "Zip_Handler.h"
 #include "../handy_stuff.h"
 
 namespace fs = std::filesystem;
@@ -48,6 +49,9 @@ int main() {
                     contains(file_name.substr(0, file_name.size() - 4), file_names)) {
                     github_connector.change_URL(file.find("browser_download_url").value());
                     github_connector.make_request();
+                    println("{} has been downloaded...", file_name);
+                    auto zipped_file = new Zip_Handler(file_name);
+                    delete zipped_file;
                 }
             }
             println("Update installed. Restarting...");
