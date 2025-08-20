@@ -3,6 +3,7 @@
 
 #include <curl/curl.h>
 #include <string>
+#include <memory>
 #include "../handy_stuff.h"
 
 using std::string;
@@ -21,14 +22,16 @@ You must call the startup and shutdown functions at program start and end. Defau
  */
 class Curl_Handler {
     CURL *handle = nullptr;
-    Error<CURLcode, char[CURL_ERROR_SIZE]> last_error;
+    std::unique_ptr<Error<CURLcode, char[CURL_ERROR_SIZE]> > last_error = std::make_unique<Error<CURLcode, char[
+        CURL_ERROR_SIZE]> >();
+    string data;
 
 public:
     explicit Curl_Handler(const string &agent_name, const string &URL = "");
 
     ~Curl_Handler();
 
-    bool make_request();
+    bool make_request() const;
 
     void change_URL(const string &new_URL) const;
 
@@ -36,11 +39,11 @@ public:
 
     void custom_setting_change(CURLoption setting, long value) const;
 
-    void reset_settings(const string &agent_name, const string &new_URL = "") const;
+    void reset_settings(const string &agent_name, const string &new_URL = "");
 
     [[nodiscard]] Error<CURLcode, char[CURL_ERROR_SIZE]> get_error() const;
 
-    string data;
+    string get_data();
 };
 
 #endif //RPG_SHEET_CURL_HANDLER_H

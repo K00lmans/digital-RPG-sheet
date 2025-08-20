@@ -1,5 +1,7 @@
 #include "Curl_Handler.h"
 
+#include <memory>
+
 Curl_Handler::~Curl_Handler() {
     if (handle) {
         curl_easy_cleanup(handle);
@@ -17,9 +19,9 @@ void Curl_Handler::change_URL(const string &new_URL) const {
     curl_easy_setopt(handle, CURLOPT_URL, new_URL.c_str());
 }
 
-bool Curl_Handler::make_request() {
-    last_error.error_code = curl_easy_perform(handle);
-    return !last_error.error_code; // 0 is the value of a success
+bool Curl_Handler::make_request() const {
+    last_error->error_code = curl_easy_perform(handle);
+    return !last_error->error_code; // 0 is the value of a success
 }
 
 void Curl_Handler::custom_setting_change(const CURLoption setting, const string &value) const {
@@ -30,15 +32,21 @@ void Curl_Handler::custom_setting_change(const CURLoption setting, const long va
     curl_easy_setopt(handle, setting, value);
 }
 
-void Curl_Handler::reset_settings(const string &agent_name, const string& new_URL) const {
+void Curl_Handler::reset_settings(const string &agent_name, const string& new_URL) {
     curl_easy_reset(handle);
+    data.clear();
+    last_error = std::make_unique<Error<CURLcode, char[CURL_ERROR_SIZE]>>();
     change_URL(new_URL);
     curl_easy_setopt(handle, CURLOPT_USERAGENT, agent_name.c_str());
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, return_data);
-    curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, last_error.buffer);
+    curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, last_error->buffer);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data);
 }
 
 Error<CURLcode, char[CURL_ERROR_SIZE]> Curl_Handler::get_error() const {
-    return last_error;
+    return *last_error;
+}
+
+string Curl_Handler::get_data() {
+    return data;
 }

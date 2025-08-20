@@ -2,6 +2,7 @@
 #include <print>
 #include <nlohmann/json.hpp>
 #include <vector>
+#include <fstream>
 #include "Curl_Handler.h"
 #include "Zip_Handler.h"
 #include "../handy_stuff.h"
@@ -10,6 +11,7 @@ namespace fs = std::filesystem;
 using std::println;
 using nlohmann::json;
 using CH = Curl_Handler;
+using std::ofstream;
 
 static std::vector<string> file_names = {"updater", "char_creator"};
 
@@ -20,7 +22,7 @@ int main() {
                 github_connector.get_error().buffer);
         return 1;
     }
-    json github_data = json::parse(github_connector.data);
+    json github_data = json::parse(github_connector.get_data());
 
     if (!fs::exists(fs::status("old_updater.exe"))) {
         // If this exists, then an update was just done
@@ -40,17 +42,27 @@ int main() {
                 println("No update found, you are using the latest version, {}", VERSION);
             }
         }
+
         if (update) {
-            fs::rename("updater.exe", "old_updater.exe");
+            // fs::rename("updater.exe", "old_updater.exe");
             json files = github_data["assets"];
             github_connector.reset_settings("updater");
-            for (auto file : files) {
+            github_connector.custom_setting_change(CURLOPT_FOLLOWLOCATION, 1l);
+            for (auto &file: files) {
                 if (auto file_name = static_cast<string>(file.find("name").value());
                     contains(file_name.substr(0, file_name.size() - 4), file_names)) {
+
                     github_connector.change_URL(file.find("browser_download_url").value());
-                    github_connector.make_request();
+                    if (!github_connector.make_request()) {
+                        println("{}: {}", static_cast<int>(github_connector.get_error().error_code),
+                                github_connector.get_error().buffer);
+                    }
+                    ofstream zip_file(file_name, std::ios::binary);
+                    zip_file.write(github_connector.get_data().c_str(), github_connector.get_data().size());
+                    zip_file.close();
                     println("{} has been downloaded...", file_name);
-                    auto zipped_file = new Zip_Handler(file_name);
+
+                    const auto zipped_file = new Zip_Handler(file_name);
                     delete zipped_file;
                 }
             }
