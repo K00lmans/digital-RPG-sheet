@@ -19,7 +19,10 @@ void Curl_Handler::change_URL(const string &new_URL) const {
     curl_easy_setopt(handle, CURLOPT_URL, new_URL.c_str());
 }
 
-bool Curl_Handler::make_request() const {
+bool Curl_Handler::make_request(const bool keep_old_data) {
+    if (!data.empty() && !keep_old_data) { // Prevents the buffer from holding old data
+        data.clear();
+    }
     last_error->error_code = curl_easy_perform(handle);
     return !last_error->error_code; // 0 is the value of a success
 }

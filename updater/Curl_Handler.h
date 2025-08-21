@@ -31,7 +31,7 @@ public:
 
     ~Curl_Handler();
 
-    bool make_request() const;
+    bool make_request(bool keep_old_data = false);
 
     void change_URL(const string &new_URL) const;
 

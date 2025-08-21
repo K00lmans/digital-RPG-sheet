@@ -64,6 +64,7 @@ int main() {
 
                     const auto zipped_file = new Zip_Handler(file_name);
                     delete zipped_file;
+                    println("{} has been unzipped...", file_name);
                 }
             }
             println("Update installed. Restarting...");

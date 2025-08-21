@@ -58,9 +58,11 @@ void Zip_Handler::read_files() {
             throw_error(4 + static_cast<double>(file) / (10 * count_digits(number_of_files - 1)), "Can't open file");
         }
         // Get file binary
-        if (file_data.file_size != zip_fread(zipped_up_file, &file_data.file_binary, file_data.file_size)) {
+        vector<char> buffer(file_data.file_size);
+        if (file_data.file_size != zip_fread(zipped_up_file, buffer.data(), file_data.file_size)) {
             throw_error(5 + static_cast<double>(file) / (10 * count_digits(number_of_files - 1)), "Full file not read");
         }
+        file_data.file_binary = string(buffer.data(), buffer.size());
         zip_fclose(zipped_up_file);
         files.emplace_back(file_data);
     }
