@@ -29,6 +29,12 @@ Once you have the files, you must install the dependencies for this program. The
   - [ ] [Expand UI](https://github.com/K00lmans/digital-RPG-sheet/issues/8)
   - [ ] [Ability Selection](https://github.com/K00lmans/digital-RPG-sheet/issues/9)
   - [ ] [Leveling System](https://github.com/K00lmans/digital-RPG-sheet/issues/10)
+- [ ] [Homebrew Creator/Editor](https://github.com/K00lmans/digital-RPG-sheet/milestone/8)
+  - [ ] [Base System](https://github.com/K00lmans/digital-RPG-sheet/issues/11)
+  - [ ] [Lineages](https://github.com/K00lmans/digital-RPG-sheet/issues/12)
+  - [ ] [Abilities](https://github.com/K00lmans/digital-RPG-sheet/issues/13)
+  - [ ] [Backgrounds](https://github.com/K00lmans/digital-RPG-sheet/issues/14)
+  - [ ] [Items](https://github.com/K00lmans/digital-RPG-sheet/issues/15)
 - *More to come!*
 
 ## Repository Info
