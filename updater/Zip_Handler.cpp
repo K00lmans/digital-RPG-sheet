@@ -49,7 +49,8 @@ void Zip_Handler::read_files() {
         }
         // The last character being a slash indicates a directory, and therefore we skip reading it since it has no data
         if (file_data.file_info.name[strlen(file_data.file_info.name) - 1] == '/') {
-            break;
+            has_subfolders = true;
+            continue; // First time ever using this, so that's neat
         }
         file_data.file_size = file_data.file_info.size;
         // Load file
@@ -66,4 +67,31 @@ void Zip_Handler::read_files() {
         zip_fclose(zipped_up_file);
         files.emplace_back(file_data);
     }
+}
+
+Zip_Handler::File_Data Zip_Handler::operator[](const int file) {
+    if (file >= number_of_files) {
+        throw_error(2, "Index greater then file count");
+    }
+    return files[file];
+}
+
+Zip_Handler::File_Data Zip_Handler::get_file(const int file) {
+    if (file >= number_of_files) {
+        throw_error(2, "Index greater then file count");
+    }
+    return files[file];
+}
+
+std::optional<Zip_Handler::File_Data> Zip_Handler::get_file(const string &file_name) const {
+    for (auto const &file : files) {
+        if (file.file_info.name == file_name) {
+            return file;
+        }
+    }
+    return std::nullopt;
+}
+
+vector<Zip_Handler::File_Data> Zip_Handler::get_copy_of_file_data() {
+    return files;
 }
