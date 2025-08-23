@@ -102,9 +102,9 @@ class window : public wxFrame
 		wxStaticText* acrobaticsM;
 		wxCheckBox* acrobatics_trained;
 		wxCheckBox* acrobatics_mastered;
-		wxStaticText* supernatralismM;
-		wxCheckBox* supernatralism_training;
-		wxCheckBox* supernatralism_mastery;
+		wxStaticText* supernaturalismM;
+		wxCheckBox* supernaturalism_training;
+		wxCheckBox* supernaturalism_mastery;
 		wxStaticText* survivalM;
 		wxCheckBox* survival_training;
 		wxCheckBox* survival_mastery;
@@ -177,8 +177,8 @@ class window : public wxFrame
 		virtual void mastered_performance( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_acrobatics( wxCommandEvent& event ) { event.Skip(); }
 		virtual void mastered_acrobatics( wxCommandEvent& event ) { event.Skip(); }
-		virtual void trained_supernatralism( wxCommandEvent& event ) { event.Skip(); }
-		virtual void mastered_supernatralism( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_supernaturalism( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_supernaturalism( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_survival( wxCommandEvent& event ) { event.Skip(); }
 		virtual void mastered_survival( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_history( wxCommandEvent& event ) { event.Skip(); }

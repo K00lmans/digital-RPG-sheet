@@ -491,19 +491,19 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	fgSizer185->SetFlexibleDirection( wxBOTH );
 	fgSizer185->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	supernatralismM = new wxStaticText( this, wxID_ANY, _("Supernatralism: +0"), wxDefaultPosition, wxDefaultSize, 0 );
-	supernatralismM->Wrap( -1 );
-	fgSizer185->Add( supernatralismM, 0, wxALL, 5 );
+	supernaturalismM = new wxStaticText( this, wxID_ANY, _("Supernaturalism: +0"), wxDefaultPosition, wxDefaultSize, 0 );
+	supernaturalismM->Wrap( -1 );
+	fgSizer185->Add( supernaturalismM, 0, wxALL, 5 );
 
-	supernatralism_training = new wxCheckBox( this, wxID_ANY, _("T"), wxDefaultPosition, wxDefaultSize, 0 );
-	supernatralism_training->Enable( false );
+	supernaturalism_training = new wxCheckBox( this, wxID_ANY, _("T"), wxDefaultPosition, wxDefaultSize, 0 );
+	supernaturalism_training->Enable( false );
 
-	fgSizer185->Add( supernatralism_training, 0, wxTOP|wxBOTTOM|wxLEFT, 5 );
+	fgSizer185->Add( supernaturalism_training, 0, wxTOP|wxBOTTOM|wxLEFT, 5 );
 
-	supernatralism_mastery = new wxCheckBox( this, wxID_ANY, _("E"), wxDefaultPosition, wxDefaultSize, 0 );
-	supernatralism_mastery->Enable( false );
+	supernaturalism_mastery = new wxCheckBox( this, wxID_ANY, _("E"), wxDefaultPosition, wxDefaultSize, 0 );
+	supernaturalism_mastery->Enable( false );
 
-	fgSizer185->Add( supernatralism_mastery, 0, wxTOP|wxBOTTOM, 5 );
+	fgSizer185->Add( supernaturalism_mastery, 0, wxTOP|wxBOTTOM, 5 );
 
 
 	fgSizer17->Add( fgSizer185, 1, wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
@@ -816,8 +816,8 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	performance_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_performance ), NULL, this );
 	acrobatics_trained->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_acrobatics ), NULL, this );
 	acrobatics_mastered->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_acrobatics ), NULL, this );
-	supernatralism_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_supernatralism ), NULL, this );
-	supernatralism_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_supernatralism ), NULL, this );
+	supernaturalism_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_supernaturalism ), NULL, this );
+	supernaturalism_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_supernaturalism ), NULL, this );
 	survival_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_survival ), NULL, this );
 	survival_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_survival ), NULL, this );
 	history_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_history ), NULL, this );
