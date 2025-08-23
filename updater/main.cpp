@@ -79,7 +79,7 @@ int main() {
                 }
             }
             println("Update installed. Restarting...");
-            // system("start updater.exe");
+            system("start updater.exe");
             return 0;
         }
     } else {
@@ -87,7 +87,7 @@ int main() {
         println("Successfully restarted after updating to {}", VERSION);
     }
     println("Launching character creator...");
-    // system("start data/char_creator.exe");
+    system("start data/char_creator.exe");
     return 0;
 }
 
