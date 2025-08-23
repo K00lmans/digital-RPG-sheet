@@ -1,7 +1,5 @@
 #include "Curl_Handler.h"
 
-#include <memory>
-
 Curl_Handler::~Curl_Handler() {
     if (handle) {
         curl_easy_cleanup(handle);

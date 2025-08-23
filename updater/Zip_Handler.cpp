@@ -84,7 +84,7 @@ Zip_Handler::File_Data Zip_Handler::get_file(const int file) {
 }
 
 std::optional<Zip_Handler::File_Data> Zip_Handler::get_file(const string &file_name) const {
-    for (auto const &file : files) {
+    for (const auto &file : files) {
         if (file.file_info.name == file_name) {
             return file;
         }
@@ -92,6 +92,19 @@ std::optional<Zip_Handler::File_Data> Zip_Handler::get_file(const string &file_n
     return std::nullopt;
 }
 
-vector<Zip_Handler::File_Data> Zip_Handler::get_copy_of_file_data() {
-    return files;
+// Makes a deep copy of the files data to allow deletion of this object
+vector<Zip_Handler::Return_File_Data> Zip_Handler::get_copy_of_file_data() const {
+    vector<Return_File_Data> copy_of_files;
+    for (const auto &file : files) {
+        Return_File_Data file_data;
+        file_data.file_size = file.file_info.size;
+        file_data.file_binary = file.file_binary;
+        file_data.file_name = string(file.file_info.name);
+        copy_of_files.emplace_back(file_data);
+    }
+    return copy_of_files;
+}
+
+bool Zip_Handler::check_for_subfolders() const {
+    return has_subfolders;
 }

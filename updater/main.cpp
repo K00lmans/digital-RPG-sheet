@@ -15,6 +15,8 @@ using std::ofstream;
 
 static std::vector<string> file_names = {"updater", "char_creator"};
 
+string get_unzip_location(const string &zipped_file);
+
 int main() {
     CH github_connector("updater", "https://api.github.com/repos/K00lmans/digital-RPG-sheet/releases/latest");
     if (!github_connector.make_request()) {
@@ -44,11 +46,11 @@ int main() {
         }
 
         if (update) {
-            // fs::rename("updater.exe", "old_updater.exe");
+            fs::rename("updater.exe", "old_updater.exe");
             json files = github_data["assets"];
             github_connector.reset_settings("updater");
             github_connector.custom_setting_change(CURLOPT_FOLLOWLOCATION, 1l);
-            for (auto &file: files) {
+            for (const auto &file: files) {
                 if (auto file_name = static_cast<string>(file.find("name").value());
                     contains(file_name.substr(0, file_name.size() - 4), file_names)) {
 
@@ -63,7 +65,16 @@ int main() {
                     println("{} has been downloaded...", file_name);
 
                     const auto zipped_file = new Zip_Handler(file_name);
+                    // This way I don't have to deal with the object sitting around
+                    auto file_data = zipped_file->get_copy_of_file_data();
                     delete zipped_file;
+                    auto unzip_location = get_unzip_location(file_name);
+                    for (const auto &file_in_zip : file_data) {
+                        ofstream file_to_write(unzip_location + file_in_zip.file_name, std::ios::binary);
+                        file_to_write.write(file_in_zip.file_binary.c_str(), file_in_zip.file_binary.size());
+                        file_to_write.close();
+                    }
+                    fs::remove(fs::path(file_name));
                     println("{} has been unzipped...", file_name);
                 }
             }
@@ -76,6 +87,13 @@ int main() {
         println("Successfully restarted after updating to {}", VERSION);
     }
     println("Launching character creator...");
-    system("start data/char_creator.exe");
+    // system("start data/char_creator.exe");
     return 0;
+}
+
+string get_unzip_location(const string &zipped_file) {
+    if (zipped_file == "updater.zip") {
+        return ""; // Updater files are installed in the main directory
+    }
+    return "data/"; // Makes sure everything else is installed in the data folder
 }

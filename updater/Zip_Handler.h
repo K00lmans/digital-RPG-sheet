@@ -23,6 +23,12 @@ public:
         zip_stat_t file_info;
     };
 
+    struct  Return_File_Data { // A modified version of File_Data specifically for get_copy_of_file_data()
+        unsigned long long file_size;
+        string file_binary;
+        string file_name;
+    };
+
 private:
     void read_files(); // Puts all the files in the files vector for easier referencing. Should only be called once
 
@@ -48,7 +54,9 @@ public:
     // Does not return anything if file not found
     [[nodiscard]] std::optional<File_Data> get_file(const string &file_name) const;
 
-    vector<File_Data> get_copy_of_file_data();
+    [[nodiscard]] vector<Return_File_Data> get_copy_of_file_data() const;
+
+    bool check_for_subfolders() const;
 };
 
 #endif //RPG_SHEET_ZIP_HANDLER_H

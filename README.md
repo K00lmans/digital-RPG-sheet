@@ -16,7 +16,7 @@ Once you have the files, you must install the dependencies for this program. The
 
 ## Roadmap
 - [ ] [Version 1.0](https://github.com/K00lmans/digital-RPG-sheet/milestone/5)
-  - [ ] [Functional Updater](https://github.com/K00lmans/digital-RPG-sheet/issues/3)
+  - [x] [Functional Updater](https://github.com/K00lmans/digital-RPG-sheet/issues/3)
   - [ ] [Functional Character Creator](https://github.com/K00lmans/digital-RPG-sheet/issues/4)
 - [ ] [Linux Release](https://github.com/K00lmans/digital-RPG-sheet/milestone/3)
   - [ ] [Linux Updater](https://github.com/K00lmans/digital-RPG-sheet/issues/1)
