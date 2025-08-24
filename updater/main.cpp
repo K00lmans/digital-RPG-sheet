@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 #include <fstream>
+#include <windows.h>
 #include "Curl_Handler.h"
 #include "Zip_Handler.h"
 #include "../handy_stuff.h"
@@ -16,6 +17,8 @@ using std::ofstream;
 static std::vector<string> file_names = {"updater", "char_creator"};
 
 string get_unzip_location(const string &zipped_file);
+
+bool start_another_program(const string &file_location);
 
 int main() {
     CH github_connector("updater", "https://api.github.com/repos/K00lmans/digital-RPG-sheet/releases/latest");
@@ -53,7 +56,6 @@ int main() {
             for (const auto &file: files) {
                 if (auto file_name = static_cast<string>(file.find("name").value());
                     contains(file_name.substr(0, file_name.size() - 4), file_names)) {
-
                     github_connector.change_URL(file.find("browser_download_url").value());
                     if (!github_connector.make_request()) {
                         println("{}: {}", static_cast<int>(github_connector.get_error().error_code),
@@ -69,7 +71,7 @@ int main() {
                     auto file_data = zipped_file->get_copy_of_file_data();
                     delete zipped_file;
                     auto unzip_location = get_unzip_location(file_name);
-                    for (const auto &file_in_zip : file_data) {
+                    for (const auto &file_in_zip: file_data) {
                         ofstream file_to_write(unzip_location + file_in_zip.file_name, std::ios::binary);
                         file_to_write.write(file_in_zip.file_binary.c_str(), file_in_zip.file_binary.size());
                         file_to_write.close();
@@ -79,7 +81,7 @@ int main() {
                 }
             }
             println("Update installed. Restarting...");
-            system("start updater.exe");
+            start_another_program("updater.exe");
             return 0;
         }
     } else {
@@ -87,7 +89,7 @@ int main() {
         println("Successfully restarted after updating to {}", VERSION);
     }
     println("Launching character creator...");
-    system("start data/char_creator.exe");
+    start_another_program("data/char_creator.exe");
     return 0;
 }
 
@@ -96,4 +98,17 @@ string get_unzip_location(const string &zipped_file) {
         return ""; // Updater files are installed in the main directory
     }
     return "data/"; // Makes sure everything else is installed in the data folder
+}
+
+// I don't know how this works but ah well
+bool start_another_program(const string &file_location) {
+    STARTUPINFO startup_info;
+    PROCESS_INFORMATION process_info;
+    ZeroMemory(&startup_info, sizeof(STARTUPINFO));
+    startup_info.cb = sizeof(STARTUPINFO);
+    ZeroMemory(&process_info, sizeof(PROCESS_INFORMATION));
+
+    const bool result = CreateProcess(file_location.c_str(), nullptr, nullptr, nullptr, false, 0, nullptr, nullptr,
+                                      &startup_info, &process_info);
+    return result;
 }

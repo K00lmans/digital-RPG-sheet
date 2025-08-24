@@ -4808,7 +4808,7 @@
                         <property name="gripper">0</property>
                         <property name="hidden">0</property>
                         <property name="id">wxID_ANY</property>
-                        <property name="label">Supernatralism: +0</property>
+                        <property name="label">Supernaturalism: +0</property>
                         <property name="markup">0</property>
                         <property name="max_size"></property>
                         <property name="maximize_button">0</property>
@@ -4817,7 +4817,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">supernatralismM</property>
+                        <property name="name">supernaturalismM</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -4879,7 +4879,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">supernatralism_training</property>
+                        <property name="name">supernaturalism_training</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -4900,7 +4900,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnCheckBox">trained_supernatralism</event>
+                        <event name="OnCheckBox">trained_supernaturalism</event>
                       </object>
                     </object>
                     <object class="sizeritem" expanded="false">
@@ -4945,7 +4945,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">supernatralism_mastery</property>
+                        <property name="name">supernaturalism_mastery</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -4966,7 +4966,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnCheckBox">mastered_supernatralism</event>
+                        <event name="OnCheckBox">mastered_supernaturalism</event>
                       </object>
                     </object>
                   </object>
