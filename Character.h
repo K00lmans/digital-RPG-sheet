@@ -8,6 +8,7 @@
 #include <optional>
 #include <memory>
 #include <string>
+#include <fstream>
 
 using std::optional;
 using std::string;
@@ -71,6 +72,10 @@ public:
     };
 
     Character(); // Assumes default values
+
+    Character(std::ifstream char_file);
+
+    void save_character(const string &path) const;
 
 private:
     std::string name;

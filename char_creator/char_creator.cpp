@@ -8,3 +8,15 @@ bool Char_Creator::OnInit() {
     SetTopWindow(ui_info);
     return true;
 }
+
+void UI::save(wxCommandEvent &event) {
+    OPENFILENAME file;
+    string file_name;
+    data.save_character(file_name);
+}
+
+void UI::load(wxCommandEvent &event) {
+    OPENFILENAME file;
+    string file_name;
+    data = Character(std::ifstream(file_name));
+}

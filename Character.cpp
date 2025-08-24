@@ -17,3 +17,13 @@ Character::Character() {
     speed = 15;
     armor_class = NONE;
 }
+
+void Character::save_character(const string &path) const {
+    std::ofstream output_file(path);
+    output_file << name << std::endl;
+    output_file.close();
+}
+
+Character::Character(std::ifstream char_file) {
+    std::getline(char_file, name);
+}
