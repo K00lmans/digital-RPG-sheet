@@ -10,8 +10,13 @@
 #include <string>
 #include <fstream>
 
+#include "handy_stuff.h"
+
 using std::optional;
 using std::string;
+using std::endl;
+using std::ostream;
+using std::istream;
 
 class Character {
 public:
@@ -73,9 +78,11 @@ public:
 
     Character(); // Assumes default values
 
-    Character(std::ifstream char_file);
+    explicit Character(std::ifstream char_file);
 
     void save_character(const string &path) const;
+
+    explicit Character(const string &file_path);
 
 private:
     std::string name;
@@ -90,3 +97,19 @@ private:
 };
 
 #endif //RPG_SHEET_CHARACTER_H
+
+ostream &operator<<(ostream &stream, const Character::Stat &stat);
+
+istream &operator>>(istream &stream, Character::Stat &stat);
+
+ostream &operator<<(ostream &stream, const Character::Attributes &attributes);
+
+istream &operator>>(istream &stream, Character::Attributes &attributes);
+
+ostream &operator<<(ostream &stream, const Character::Skills &skills);
+
+istream &operator>>(istream &stream, Character::Skills &skills);
+
+ostream &operator<<(ostream &stream, const Character::Health &health);
+
+istream &operator>>(istream &stream, Character::Health &health);

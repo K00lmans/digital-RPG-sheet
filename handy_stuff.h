@@ -51,12 +51,28 @@ static int replace_substring(std::string &string, const std::string &substring, 
 static void sleep(const long double sleep_time) {
     static unsigned short f1 = 0, f2 = 1; // I like to do Fibonacci to pass the time
     const auto start_time = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<long double> elapsed_time;
+    std::chrono::duration<long double> elapsed_time{};
     do {
         f2 += f1;
         f1 = f2 - f1;
         elapsed_time = std::chrono::high_resolution_clock::now() - start_time;
     } while (elapsed_time.count() <= sleep_time);
+}
+
+// Separates a string into a bunch of strings by a seperator. Result does not include the seperator
+static std::vector<std::string> tokenize_string(const std::string &seperator, const std::string &input) {
+    std::vector<std::string> tokens;
+    std::string current_working_string = input;
+    while (true) {
+        const auto pos_of_next_seperator = current_working_string.find(seperator);
+        if (pos_of_next_seperator == std::string::npos) {
+            tokens.push_back(current_working_string);
+            break;
+        }
+        tokens.push_back(current_working_string.substr(0, pos_of_next_seperator));
+        current_working_string = current_working_string.substr(pos_of_next_seperator + seperator.length());
+    }
+    return tokens;
 }
 
 #endif //RPG_SHEET_HANDY_FUNCTIONS_H
