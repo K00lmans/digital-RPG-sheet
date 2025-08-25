@@ -48,10 +48,11 @@ static int replace_substring(std::string &string, const std::string &substring, 
 }
 
 // I find most C++ sleep functions kinda sucky, so I like to make my own instead
-static void sleep(const long double sleep_time) {
+template<typename NUMBER>
+static void sleep(const NUMBER sleep_time) {
     static unsigned short f1 = 0, f2 = 1; // I like to do Fibonacci to pass the time
     const auto start_time = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<long double> elapsed_time{};
+    std::chrono::duration<NUMBER> elapsed_time{};
     do {
         f2 += f1;
         f1 = f2 - f1;
@@ -73,6 +74,15 @@ static std::vector<std::string> tokenize_string(const std::string &seperator, co
         current_working_string = current_working_string.substr(pos_of_next_seperator + seperator.length());
     }
     return tokens;
+}
+
+// Rounding in my system rounds down at .5 so this handles it
+template<typename NUMBER, typename RESULT_NUMBER>
+RESULT_NUMBER system_round(NUMBER num, int trailing_digits = 0) {
+    if (static_cast<int>(num * pow(10, trailing_digits + 1)) % 10 == 5) {
+        return floor(num * pow(10, trailing_digits)) / trailing_digits;
+    }
+    return round(num * pow(10, trailing_digits)) / trailing_digits;
 }
 
 #endif //RPG_SHEET_HANDY_FUNCTIONS_H

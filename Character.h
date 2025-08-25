@@ -9,7 +9,7 @@
 #include <memory>
 #include <string>
 #include <fstream>
-
+#include <unordered_map>
 #include "handy_stuff.h"
 
 using std::optional;
@@ -17,6 +17,8 @@ using std::string;
 using std::endl;
 using std::ostream;
 using std::istream;
+
+#define um std::unordered_map
 
 class Character {
 public:
@@ -31,6 +33,13 @@ public:
         UNTRAINED,
         TRAINED,
         EXPERT
+    };
+
+    enum Flag {
+        // A set of flags to be used with this class
+        // For use in change attributes
+        CHANGE_TO, // Sets the value being changed
+        ADD_TO // Adds to the value being changed
     };
 
     // Attributes and skills have several elements inside of them, this struct contains all those values
@@ -50,6 +59,10 @@ public:
         Stat fortitude;
         Stat agility;
         Stat dexterity;
+        um<string, Stat*> attribute_selection_map = {
+            {"intelligence", &intelligence}, {"wisdom", &wisdom}, {"perception", &perception}, {"strength", &strength},
+            {"presence", &presence}, {"fortitude", &fortitude}, {"agility", &agility}, {"dexterity", &dexterity}
+        };
     };
 
     struct Skills {
@@ -84,16 +97,21 @@ public:
 
     explicit Character(const string &file_path);
 
-private:
+    void calculate_skills();
+
+    void change_attributes(string attribute_to_change, Flag flag = CHANGE_TO);
+
     std::string name;
-    std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
-    std::shared_ptr<Skills> skills = std::make_shared<Skills>();
     int extra_attribute_points;
     Health health_info;
     double speed;
     Armor_Class armor_class;
     string lineage;
     string background;
+
+private:
+    std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
+    std::shared_ptr<Skills> skills = std::make_shared<Skills>();
 };
 
 #endif //RPG_SHEET_CHARACTER_H

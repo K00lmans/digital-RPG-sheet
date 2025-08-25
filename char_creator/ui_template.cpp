@@ -28,17 +28,23 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 
 	fgSizer2->Add( sbSizer13, 1, wxALIGN_CENTER_VERTICAL, 5 );
 
-	wxBoxSizer* bSizer25;
-	bSizer25 = new wxBoxSizer( wxVERTICAL );
+	wxGridSizer* gSizer1;
+	gSizer1 = new wxGridSizer( 0, 2, 0, 0 );
 
 	save_button = new wxButton( this, wxID_ANY, _("Save"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer25->Add( save_button, 0, wxALL|wxALIGN_RIGHT, 5 );
+	gSizer1->Add( save_button, 0, wxALL|wxALIGN_RIGHT, 5 );
+
+	new_button = new wxButton( this, wxID_ANY, _("New"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer1->Add( new_button, 0, wxALL, 5 );
+
+	save_as_button = new wxButton( this, wxID_ANY, _("Save As"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer1->Add( save_as_button, 0, wxALL, 5 );
 
 	load_button = new wxButton( this, wxID_ANY, _("Load"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer25->Add( load_button, 0, wxALL|wxALIGN_RIGHT, 5 );
+	gSizer1->Add( load_button, 0, wxALL|wxALIGN_RIGHT, 5 );
 
 
-	fgSizer2->Add( bSizer25, 1, wxEXPAND, 5 );
+	fgSizer2->Add( gSizer1, 1, wxEXPAND|wxALIGN_RIGHT, 5 );
 
 	wxBoxSizer* bSizer12;
 	bSizer12 = new wxBoxSizer( wxHORIZONTAL );
@@ -781,6 +787,8 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 
 	// Connect Events
 	save_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::save ), NULL, this );
+	new_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::new_char ), NULL, this );
+	save_as_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::save_as ), NULL, this );
 	load_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::load ), NULL, this );
 	int_up->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::increase_int ), NULL, this );
 	int_down->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::decrease_int ), NULL, this );

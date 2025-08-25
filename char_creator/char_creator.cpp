@@ -10,13 +10,24 @@ bool Char_Creator::OnInit() {
 }
 
 void UI::save(wxCommandEvent &event) {
-    OPENFILENAME file;
-    string file_name;
-    data.save_character(file_name);
+    data.name = char_name->GetValue(); // Instead of getting the name with every keypress get it only when needed
+    if (save_location.empty()) {
+        save_as(event);
+    }
+    data.save_character(save_location);
 }
 
 void UI::load(wxCommandEvent &event) {
     OPENFILENAME file;
-    string file_name;
-    data = Character(std::ifstream(file_name));
+    data = Character(save_location);
+    update_visuals();
+}
+
+void UI::new_char(wxCommandEvent &event) {
+    data = Character();
+    update_visuals();
+}
+
+void UI::save_as(wxCommandEvent &event) {
+    OPENFILENAME file;
 }

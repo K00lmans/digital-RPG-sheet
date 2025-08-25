@@ -40,6 +40,8 @@ class window : public wxFrame
 	protected:
 		wxTextCtrl* char_name;
 		wxButton* save_button;
+		wxButton* new_button;
+		wxButton* save_as_button;
 		wxButton* load_button;
 		wxBitmapButton* int_up;
 		wxStaticText* m_staticText361;
@@ -142,6 +144,8 @@ class window : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void save( wxCommandEvent& event ) { event.Skip(); }
+		virtual void new_char( wxCommandEvent& event ) { event.Skip(); }
+		virtual void save_as( wxCommandEvent& event ) { event.Skip(); }
 		virtual void load( wxCommandEvent& event ) { event.Skip(); }
 		virtual void increase_int( wxCommandEvent& event ) { event.Skip(); }
 		virtual void decrease_int( wxCommandEvent& event ) { event.Skip(); }

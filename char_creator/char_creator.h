@@ -14,12 +14,21 @@ public:
 };
 
 class UI final : public window {
+    string save_location;
+
 public:
     UI() : window(nullptr) {}
 
     void save(wxCommandEvent &event) override;
 
     void load(wxCommandEvent &event) override;
+
+    void save_as(wxCommandEvent &event) override;
+
+    void new_char(wxCommandEvent &event) override;
+
+    // Should only be used for a full refresh, each individual update should update its own changes
+    void update_visuals();
 
     Character data = Character();
 };

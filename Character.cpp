@@ -109,3 +109,7 @@ istream &operator>>(istream &stream, Character::Health &health) {
     health.temp_health = std::stoi(data_tokens[2]);
     return stream;
 }
+
+void Character::calculate_skills() {
+    skills->teaching.modifier = attributes->wisdom.modifier;
+}
