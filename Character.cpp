@@ -110,6 +110,18 @@ istream &operator>>(istream &stream, Character::Health &health) {
     return stream;
 }
 
-void Character::calculate_skills() {
-    skills->teaching.modifier = attributes->wisdom.modifier;
+void Character::change_attributes(const string &attribute_to_change, int modification_value, const Flag flag) const {
+    const auto selected_attribute = attributes->attribute_selection_map[attribute_to_change];
+    if (flag == CHANGE_TO) {
+        selected_attribute->value = modification_value;
+    } else if (flag == ADD_TO) {
+        selected_attribute->value.value() += modification_value;
+    }
+    selected_attribute->value_to_modifier();
+}
+
+void Character::train_attribute(const string &attribute_to_train) const {
+    const auto selected_attribute = attributes->attribute_selection_map[attribute_to_train];
+    selected_attribute->training_level = static_cast<Training_Level>((selected_attribute->training_level + 1) % 2);
+    selected_attribute->value_to_modifier();
 }

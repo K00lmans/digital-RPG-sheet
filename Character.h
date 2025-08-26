@@ -48,6 +48,12 @@ public:
         Training_Level training_level;
         int training_points;
         optional<int> value; // Skills do not have a value
+
+         void value_to_modifier() {
+             if (value.has_value()) {
+                 modifier = (value.value() - 10) / 2 + 5 * training_level;
+             }
+        }
     };
 
     struct Attributes {
@@ -97,14 +103,15 @@ public:
 
     explicit Character(const string &file_path);
 
-    void calculate_skills();
+    void change_attributes(const string& attribute_to_change, int modification_value, Flag flag = CHANGE_TO) const;
 
-    void change_attributes(string attribute_to_change, Flag flag = CHANGE_TO);
+    // Flips the training level, so becomes untrained if trained and trained if untrained
+    void train_attribute(const string &attribute_to_train) const;
 
     std::string name;
-    int extra_attribute_points;
-    Health health_info;
-    double speed;
+    int extra_attribute_points{};
+    Health health_info{};
+    double speed{};
     Armor_Class armor_class;
     string lineage;
     string background;
