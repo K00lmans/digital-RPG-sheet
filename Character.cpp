@@ -110,18 +110,32 @@ istream &operator>>(istream &stream, Character::Health &health) {
     return stream;
 }
 
-void Character::change_attributes(const string &attribute_to_change, int modification_value, const Flag flag) const {
+void Character::change_attributes(const string &attribute_to_change, int modification_value, const Flag flag) {
     const auto selected_attribute = attributes->attribute_selection_map[attribute_to_change];
     if (flag == CHANGE_TO) {
         selected_attribute->value = modification_value;
     } else if (flag == ADD_TO) {
         selected_attribute->value.value() += modification_value;
     }
-    selected_attribute->value_to_modifier();
+    recalculate_modifier(selected_attribute, ATTRIBUTE);
 }
 
-void Character::train_attribute(const string &attribute_to_train) const {
-    const auto selected_attribute = attributes->attribute_selection_map[attribute_to_train];
-    selected_attribute->training_level = static_cast<Training_Level>((selected_attribute->training_level + 1) % 2);
-    selected_attribute->value_to_modifier();
+void Character::train(const string &thing_to_train, const Flag selected_thing, int new_level, const Flag setting_flag) {
+    Stat *selection;
+    if (selected_thing == ATTRIBUTE) {
+        selection = attributes->attribute_selection_map[thing_to_train];
+    } else if (selected_thing == SKILL) {
+        selection = skills->skill_selection_map[thing_to_train];
+    } else {
+        return;
+    }
+    if (setting_flag == CHANGE_TO) {
+        selection->training_level = static_cast<Training_Level>(new_level);
+    } else if (setting_flag == ADD_TO) {
+        selection->training_level = static_cast<Training_Level>(
+            (selection->training_level + new_level) % (2 + selection->value.has_value()));
+    } else {
+        return;
+    }
+    recalculate_modifier(selection, selected_thing);
 }

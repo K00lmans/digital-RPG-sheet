@@ -37,9 +37,12 @@ public:
 
     enum Flag {
         // A set of flags to be used with this class
-        // For use in change attributes
+        // For use when changing values
         CHANGE_TO, // Sets the value being changed
-        ADD_TO // Adds to the value being changed
+        ADD_TO, // Adds to the value being changed
+        // For use in the general purpose functions
+        ATTRIBUTE,
+        SKILL
     };
 
     // Attributes and skills have several elements inside of them, this struct contains all those values
@@ -48,12 +51,6 @@ public:
         Training_Level training_level;
         int training_points;
         optional<int> value; // Skills do not have a value
-
-         void value_to_modifier() {
-             if (value.has_value()) {
-                 modifier = (value.value() - 10) / 2 + 5 * training_level;
-             }
-        }
     };
 
     struct Attributes {
@@ -65,10 +62,12 @@ public:
         Stat fortitude;
         Stat agility;
         Stat dexterity;
-        um<string, Stat*> attribute_selection_map = {
+        um<string, Stat *> attribute_selection_map = {
             {"intelligence", &intelligence}, {"wisdom", &wisdom}, {"perception", &perception}, {"strength", &strength},
             {"presence", &presence}, {"fortitude", &fortitude}, {"agility", &agility}, {"dexterity", &dexterity}
         };
+
+        void calculate_attribute(Stat attribute);
     };
 
     struct Skills {
@@ -87,6 +86,16 @@ public:
         Stat sleight_of_hand;
         Stat mechanical;
         Stat insight;
+        um<string, Stat *> skill_selection_map = {
+            {"teaching", &teaching}, {"doctoring", &doctoring}, {"intimidation", &intimidation},
+            {"performance", &performance}, {"acrobatics", &acrobatics}, {"acrobatics", &acrobatics},
+            {"supernaturalism", &supernaturalism}, {"survival", &survival}, {"history", &history},
+            {"negotiation", &negotiation}, {"athletics", &athletics}, {"investigation", &investigation},
+            {"stealth", &stealth}, {"sleight_of_hand", &sleight_of_hand}, {"mechanical", &mechanical},
+            {"insight", &insight}
+        };
+
+        void calculate_skill(Stat skill);
     };
 
     struct Health {
@@ -103,10 +112,16 @@ public:
 
     explicit Character(const string &file_path);
 
-    void change_attributes(const string& attribute_to_change, int modification_value, Flag flag = CHANGE_TO) const;
+    // Skills are based on attributes and therefore this does not need to be a general function
+    void change_attributes(const string &attribute_to_change, int modification_value, Flag flag = CHANGE_TO);
 
-    // Flips the training level, so becomes untrained if trained and trained if untrained
-    void train_attribute(const string &attribute_to_train) const;
+    void train(const string &thing_to_train, Flag selected_thing, int new_level, Flag setting_flag = CHANGE_TO);
+
+    // Should not be called for a stat unless all that is changing is the training level
+    void recalculate_modifier(Stat *thing_to_recalculate, Flag flag);
+
+    // Use this for when a skill changes other than by training level
+    void calculate_skills();
 
     std::string name;
     int extra_attribute_points{};
