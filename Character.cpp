@@ -1,7 +1,7 @@
 #include "Character.h"
 
 Character::Character() {
-    const Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0, std::nullopt, attribute_update};
+    constexpr Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0, };
     *attributes = {
         default_ability, default_ability, default_ability, default_ability, default_ability, default_ability,
         default_ability, default_ability
@@ -110,49 +110,87 @@ istream &operator>>(istream &stream, Character::Health &health) {
     return stream;
 }
 
-void Character::change_attributes(const string &attribute_to_change, int modification_value, const Flag flag) {
+void Character::change_attributes(const string &attribute_to_change, int modification_value, const Flag flag) const {
     const auto selected_attribute = attributes->attribute_selection_map[attribute_to_change];
     if (flag == CHANGE_TO) {
         selected_attribute->value = modification_value;
     } else if (flag == ADD_TO) {
         selected_attribute->value.value() += modification_value;
     }
-    selected_attribute->update_function(selected_attribute);
+    attribute_update(selected_attribute);
 }
 
-void Character::train(const string &thing_to_train, const Flag selected_thing, int new_level, const Flag setting_flag) {
+void Character::train(const string &thing_to_train, const Flag type, int new_level, const Flag setting) {
     Stat *selection;
-    if (selected_thing == ATTRIBUTE) {
+    if (type == ATTRIBUTE) {
         selection = attributes->attribute_selection_map[thing_to_train];
-    } else if (selected_thing == SKILL) {
+    } else if (type == SKILL) {
         selection = skills->skill_selection_map[thing_to_train];
     } else {
         return;
     }
-    if (setting_flag == CHANGE_TO) {
+    if (setting == CHANGE_TO) {
         selection->training_level = static_cast<Training_Level>(new_level);
-    } else if (setting_flag == ADD_TO) {
+    } else if (setting == ADD_TO) {
         selection->training_level = static_cast<Training_Level>(
             (selection->training_level + new_level) % (2 + selection->value.has_value()));
     } else {
         return;
     }
-    selection->update_function(selection);
+    update_single_stat(type, thing_to_train);
 }
 
-void attribute_update(Character::Stat *attribute) {
+void Character::attribute_update(Stat *attribute) {
     attribute->modifier = attribute->value.value() / 2 - 5 + 5 * attribute->training_level;
 }
 
-int handle_training_for_skills(int modifier, const Character::Training_Level training) {
-    if (modifier > 0 && training == Character::UNTRAINED) {
+int Character::handle_training_for_skills(int modifier, const Training_Level training) {
+    if (modifier > 0 && training == UNTRAINED) {
         return system_round<double, int>(modifier / 2.0);
     }
-    if (modifier < 0 && training >= Character::TRAINED) {
+    if (modifier < 0 && training >= TRAINED) {
         modifier = system_round<double, int>(modifier / 2.0);
     }
-    if (training == Character::EXPERT) {
+    if (training == EXPERT) {
         modifier += 5;
     }
     return modifier;
+}
+
+void Character::update_single_stat(const Flag type, const string &thing_to_update) {
+    if (type == ATTRIBUTE) {
+        attribute_update(attributes->attribute_selection_map[thing_to_update]);
+    } else if (type == SKILL) {
+        const auto selected_skill = skills->skill_selection_map[thing_to_update];
+        selected_skill->modifier = handle_training_for_skills(selected_skill->modifier, selected_skill->training_level);
+    }
+}
+
+Character::Health::Damage_Result Character::deal_damage(int damage_dealt) {
+    if (damage_dealt >= health_info.current_health) {
+        health_info.current_health = 0;
+        if (damage_dealt >= health_info.max_health / 4) {
+            if (health_info.temp_health != 0) {
+                health_info.temp_health = 0;
+                return Health::BAD_TIME;
+            }
+            return Health::HEALTH_AND_ATTRITION;
+        }
+        if (health_info.temp_health != 0) {
+            health_info.temp_health = 0;
+            return Health::TEMP_AND_HEALTH;
+        }
+        return Health::HEALTH_DEPLETED;
+    }
+    health_info.current_health -= damage_dealt;
+    if (damage_dealt >= health_info.temp_health) {
+        damage_dealt -= health_info.temp_health;
+        health_info.temp_health = 0;
+        if (damage_dealt >= health_info.max_health / 4) {
+            return Health::TEMP_AND_ATTRITION;
+        }
+        return Health::TEMP_HEALTH_DEPLETED;
+    }
+    health_info.temp_health -= damage_dealt;
+    return Health::NONE;
 }
