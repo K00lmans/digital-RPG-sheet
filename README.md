@@ -35,6 +35,11 @@ Once you have the files, you must install the dependencies for this program. The
   - [ ] [Abilities](https://github.com/K00lmans/digital-RPG-sheet/issues/13)
   - [ ] [Backgrounds](https://github.com/K00lmans/digital-RPG-sheet/issues/14)
   - [ ] [Items](https://github.com/K00lmans/digital-RPG-sheet/issues/15)
+- [ ] [Better Updater](https://github.com/K00lmans/digital-RPG-sheet/milestone/9)
+  - [ ] [UI Loading Bar](https://github.com/K00lmans/digital-RPG-sheet/issues/16)
+  - [ ] [App Selection Menu](https://github.com/K00lmans/digital-RPG-sheet/issues/17)
+  - [ ] [Detailed Update Information](https://github.com/K00lmans/digital-RPG-sheet/issues/18)
+  - [ ] [Make Pretty](https://github.com/K00lmans/digital-RPG-sheet/issues/19)
 - *More to come!*
 
 ## Repository Info
