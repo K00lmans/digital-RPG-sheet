@@ -85,4 +85,9 @@ RESULT_NUMBER system_round(NUMBER num, int trailing_digits = 0) {
     return round(num * pow(10, trailing_digits)) / trailing_digits;
 }
 
+// From the interwebs, returns 1 for positive, -1 for negative, and 0 for zero
+template <typename NUM> int get_sign(NUM val) {
+    return (NUM(0) < val) - (val < NUM(0));
+}
+
 #endif //RPG_SHEET_HANDY_FUNCTIONS_H

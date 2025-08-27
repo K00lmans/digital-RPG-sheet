@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
+#include <vector>
 #include "handy_stuff.h"
 
 using std::optional;
@@ -17,6 +18,7 @@ using std::string;
 using std::endl;
 using std::ostream;
 using std::istream;
+using std::vector;
 
 #define um std::unordered_map
 
@@ -44,7 +46,11 @@ public:
 
         // For use as an identifier in general purpose functions
         ATTRIBUTE,
-        SKILL
+        SKILL,
+
+        // For use with health
+        NORMAL, // Non-temp heath
+        TEMP // Temp health
     };
 
     // Attributes and skills have several elements inside of them, this struct contains all those values
@@ -128,7 +134,19 @@ public:
     void train(const string &thing_to_train, Flag type, int new_level, Flag setting = CHANGE_TO);
 
     // Returns true if damage dealt adds a level of attrition
-    Health::Damage_Result deal_damage(int damage_dealt);
+    Health::Damage_Result deal_damage(unsigned int damage_dealt);
+
+    void heal(unsigned int amount, Flag type);
+
+    void set_max_health(int amount, Flag flag = CHANGE_TO);
+
+    int calculate_protection_score() const;
+
+    unsigned int get_health() const;
+
+    unsigned int get_max_health() const;
+
+    unsigned int get_temp_health() const;
 
     std::string name;
     unsigned int extra_attribute_points{};

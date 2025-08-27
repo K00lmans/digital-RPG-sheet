@@ -1,7 +1,7 @@
 #include "Character.h"
 
 Character::Character() {
-    constexpr Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0, };
+    constexpr Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0,};
     *attributes = {
         default_ability, default_ability, default_ability, default_ability, default_ability, default_ability,
         default_ability, default_ability
@@ -166,7 +166,7 @@ void Character::update_single_stat(const Flag type, const string &thing_to_updat
     }
 }
 
-Character::Health::Damage_Result Character::deal_damage(int damage_dealt) {
+Character::Health::Damage_Result Character::deal_damage(unsigned int damage_dealt) {
     if (damage_dealt >= health_info.current_health) {
         health_info.current_health = 0;
         if (damage_dealt >= health_info.max_health / 4) {
@@ -193,4 +193,64 @@ Character::Health::Damage_Result Character::deal_damage(int damage_dealt) {
     }
     health_info.temp_health -= damage_dealt;
     return Health::NONE;
+}
+
+void Character::heal(unsigned int amount, const Flag type) {
+    if (type == NORMAL) {
+        if (const auto missing_health = health_info.max_health - (health_info.current_health - health_info.temp_health);
+            missing_health <= amount) {
+            amount = missing_health;
+        }
+        health_info.current_health += amount;
+    } else if (type == TEMP) {
+        health_info.temp_health += amount;
+        health_info.current_health += amount;
+    }
+}
+
+void Character::set_max_health(const int amount, const Flag flag) {
+    if (flag == CHANGE_TO) {
+        health_info.max_health = amount;
+    } else if (flag == ADD_TO) {
+        health_info.max_health += amount;
+    }
+}
+
+int Character::calculate_protection_score() const {
+    int protection_score = 1;
+    protection_score += attributes->fortitude.modifier;
+    switch (armor_class) {
+        case NONE:
+            protection_score += attributes->agility.modifier;
+            break;
+        case LIGHT:
+            break; // Need to make item training system first
+        case MEDIUM : {
+            int agility_component = attributes->agility.modifier;
+            if (abs(agility_component) > 5) {
+                agility_component = 5 * get_sign(agility_component);
+            }
+            protection_score += 10 + agility_component;
+            break;
+        }
+        case HEAVY:
+            protection_score += 15;
+            break;
+    }
+    if (protection_score < 1) {
+        protection_score = 1;
+    }
+    return protection_score;
+}
+
+unsigned int Character::get_health() const {
+    return health_info.current_health;
+}
+
+unsigned int Character::get_max_health() const {
+    return health_info.max_health;
+}
+
+unsigned int Character::get_temp_health() const {
+    return health_info.temp_health;
 }
