@@ -51,6 +51,7 @@ public:
         Training_Level training_level;
         int training_points;
         optional<int> value; // Skills do not have a value
+        void (*update_function)(Stat *); // Updates the modifier
     };
 
     struct Attributes {
@@ -117,12 +118,6 @@ public:
 
     void train(const string &thing_to_train, Flag selected_thing, int new_level, Flag setting_flag = CHANGE_TO);
 
-    // Should not be called for a stat unless all that is changing is the training level
-    void recalculate_modifier(Stat *thing_to_recalculate, Flag flag);
-
-    // Use this for when a skill changes other than by training level
-    void calculate_skills();
-
     std::string name;
     int extra_attribute_points{};
     Health health_info{};
@@ -135,8 +130,6 @@ private:
     std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
     std::shared_ptr<Skills> skills = std::make_shared<Skills>();
 };
-
-#endif //RPG_SHEET_CHARACTER_H
 
 ostream &operator<<(ostream &stream, const Character::Stat &stat);
 
@@ -153,3 +146,10 @@ istream &operator>>(istream &stream, Character::Skills &skills);
 ostream &operator<<(ostream &stream, const Character::Health &health);
 
 istream &operator>>(istream &stream, Character::Health &health);
+
+void attribute_update(Character::Stat *attribute);
+
+// Handles the effect of training on a modifier
+int handle_training_for_skills(int modifier, Character::Training_Level training);
+
+#endif //RPG_SHEET_CHARACTER_H

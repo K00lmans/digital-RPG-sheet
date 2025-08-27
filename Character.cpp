@@ -1,7 +1,7 @@
 #include "Character.h"
 
 Character::Character() {
-    constexpr Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0};
+    const Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0, std::nullopt, attribute_update};
     *attributes = {
         default_ability, default_ability, default_ability, default_ability, default_ability, default_ability,
         default_ability, default_ability
@@ -117,7 +117,7 @@ void Character::change_attributes(const string &attribute_to_change, int modific
     } else if (flag == ADD_TO) {
         selected_attribute->value.value() += modification_value;
     }
-    recalculate_modifier(selected_attribute, ATTRIBUTE);
+    selected_attribute->update_function(selected_attribute);
 }
 
 void Character::train(const string &thing_to_train, const Flag selected_thing, int new_level, const Flag setting_flag) {
@@ -137,5 +137,22 @@ void Character::train(const string &thing_to_train, const Flag selected_thing, i
     } else {
         return;
     }
-    recalculate_modifier(selection, selected_thing);
+    selection->update_function(selection);
+}
+
+void attribute_update(Character::Stat *attribute) {
+    attribute->modifier = attribute->value.value() / 2 - 5 + 5 * attribute->training_level;
+}
+
+int handle_training_for_skills(int modifier, const Character::Training_Level training) {
+    if (modifier > 0 && training == Character::UNTRAINED) {
+        return system_round<double, int>(modifier / 2.0);
+    }
+    if (modifier < 0 && training >= Character::TRAINED) {
+        modifier = system_round<double, int>(modifier / 2.0);
+    }
+    if (training == Character::EXPERT) {
+        modifier += 5;
+    }
+    return modifier;
 }
