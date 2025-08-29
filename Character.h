@@ -31,10 +31,6 @@ public:
         CHANGE_TO, // Sets the value being changed
         ADD_TO, // Adds to the value being changed
 
-        // For use as an identifier in general purpose functions
-        ATTRIBUTE,
-        SKILL,
-
         // For use with health
         NORMAL, // Non-temp heath
         TEMP // Temp health
@@ -146,7 +142,7 @@ public:
     void change_attributes(Attributes_And_Skills attribute_to_change, int modification_value,
                            Flag flag = CHANGE_TO) const;
 
-    void train(Attributes_And_Skills thing_to_train, Flag type, int new_level, Flag setting = CHANGE_TO);
+    void train(Attributes_And_Skills thing_to_train, int new_level, Flag setting = CHANGE_TO);
 
     // Returns true if damage dealt adds a level of attrition
     Health::Damage_Result deal_damage(unsigned int damage_dealt);
@@ -166,7 +162,7 @@ public:
     void update_skills();
 
     // Returns a deep copy of a stat to prevent editing
-    [[nodiscard]] std::shared_ptr<Stat> get_stat(Attributes_And_Skills thing_to_get, Flag type) const;
+    [[nodiscard]] Stat get_stat(Attributes_And_Skills thing_to_get) const;
 
     std::string name;
     unsigned int extra_attribute_points{};
@@ -181,7 +177,7 @@ private:
     // Handles the effect of training on a modifier
     static int handle_training_for_skills(int modifier, Training_Level training);
 
-    void update_single_stat(Flag type, Attributes_And_Skills thing_to_update);
+    void update_single_stat(Attributes_And_Skills thing_to_update);
 
     std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
     std::shared_ptr<Skills> skills = std::make_shared<Skills>();
