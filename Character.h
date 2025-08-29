@@ -24,19 +24,6 @@ using std::vector;
 
 class Character {
 public:
-    enum Armor_Class {
-        NONE,
-        LIGHT,
-        MEDIUM,
-        HEAVY
-    };
-
-    enum Training_Level {
-        UNTRAINED,
-        TRAINED,
-        EXPERT
-    };
-
     enum Flag {
         // A set of flags to be used with this class
 
@@ -51,6 +38,34 @@ public:
         // For use with health
         NORMAL, // Non-temp heath
         TEMP // Temp health
+    };
+
+    enum Attributes_And_Skills {
+        INTELLIGENCE,
+        WISDOM,
+        PERCEPTION,
+        STRENGTH,
+        PRESENCE,
+        FORTITUDE,
+        AGILITY,
+        DEXTERITY,
+        END_OF_ATTRIBUTES, // Along with END_OF_SKILLS acts as a divider
+        TEACHING,
+        DOCTORING,
+        INTIMIDATION,
+        PERFORMANCE,
+        ACROBATICS,
+        SUPERNATURALISM,
+        SURVIVAL,
+        HISTORY,
+        NEGOTIATION,
+        ATHLETICS,
+        INVESTIGATION,
+        STEALTH,
+        SLEIGHT_OF_HAND,
+        MECHANICAL,
+        INSIGHT,
+        END_OF_SKILLS
     };
 
     // Attributes and skills have several elements inside of them, this struct contains all those values
@@ -70,9 +85,9 @@ public:
         Stat fortitude;
         Stat agility;
         Stat dexterity;
-        um<string, Stat *> attribute_selection_map = {
-            {"intelligence", &intelligence}, {"wisdom", &wisdom}, {"perception", &perception}, {"strength", &strength},
-            {"presence", &presence}, {"fortitude", &fortitude}, {"agility", &agility}, {"dexterity", &dexterity}
+        um<Attributes_And_Skills, Stat *> attribute_selection_map = {
+            {INTELLIGENCE, &intelligence}, {WISDOM, &wisdom}, {PERCEPTION, &perception}, {STRENGTH, &strength},
+            {PRESENCE, &presence}, {FORTITUDE, &fortitude}, {AGILITY, &agility}, {DEXTERITY, &dexterity}
         };
     };
 
@@ -92,13 +107,12 @@ public:
         Stat sleight_of_hand;
         Stat mechanical;
         Stat insight;
-        um<string, Stat *> skill_selection_map = {
-            {"teaching", &teaching}, {"doctoring", &doctoring}, {"intimidation", &intimidation},
-            {"performance", &performance}, {"acrobatics", &acrobatics}, {"acrobatics", &acrobatics},
-            {"supernaturalism", &supernaturalism}, {"survival", &survival}, {"history", &history},
-            {"negotiation", &negotiation}, {"athletics", &athletics}, {"investigation", &investigation},
-            {"stealth", &stealth}, {"sleight_of_hand", &sleight_of_hand}, {"mechanical", &mechanical},
-            {"insight", &insight}
+        um<Attributes_And_Skills, Stat *> skill_selection_map = {
+            {TEACHING, &teaching}, {DOCTORING, &doctoring}, {INTIMIDATION, &intimidation},
+            {PERFORMANCE, &performance}, {ACROBATICS, &acrobatics}, {SUPERNATURALISM, &supernaturalism},
+            {SURVIVAL, &survival}, {HISTORY, &history}, {NEGOTIATION, &negotiation}, {ATHLETICS, &athletics},
+            {INVESTIGATION, &investigation}, {STEALTH, &stealth}, {SLEIGHT_OF_HAND, &sleight_of_hand},
+            {MECHANICAL, &mechanical}, {INSIGHT, &insight}
         };
     };
 
@@ -129,9 +143,10 @@ public:
     explicit Character(const string &file_path);
 
     // Skills are based on attributes and therefore this does not need to be a general function
-    void change_attributes(const string &attribute_to_change, int modification_value, Flag flag = CHANGE_TO) const;
+    void change_attributes(Attributes_And_Skills attribute_to_change, int modification_value,
+                           Flag flag = CHANGE_TO) const;
 
-    void train(const string &thing_to_train, Flag type, int new_level, Flag setting = CHANGE_TO);
+    void train(Attributes_And_Skills thing_to_train, Flag type, int new_level, Flag setting = CHANGE_TO);
 
     // Returns true if damage dealt adds a level of attrition
     Health::Damage_Result deal_damage(unsigned int damage_dealt);
@@ -140,13 +155,18 @@ public:
 
     void set_max_health(int amount, Flag flag = CHANGE_TO);
 
-    int calculate_protection_score() const;
+    [[nodiscard]] int calculate_protection_score() const;
 
-    unsigned int get_health() const;
+    [[nodiscard]] unsigned int get_health() const;
 
-    unsigned int get_max_health() const;
+    [[nodiscard]] unsigned int get_max_health() const;
 
-    unsigned int get_temp_health() const;
+    [[nodiscard]] unsigned int get_temp_health() const;
+
+    void update_skills();
+
+    // Returns a deep copy of a stat to prevent editing
+    [[nodiscard]] std::shared_ptr<Stat> get_stat(Attributes_And_Skills thing_to_get, Flag type) const;
 
     std::string name;
     unsigned int extra_attribute_points{};
@@ -161,7 +181,7 @@ private:
     // Handles the effect of training on a modifier
     static int handle_training_for_skills(int modifier, Training_Level training);
 
-    void update_single_stat(Flag type, const string &thing_to_update);
+    void update_single_stat(Flag type, Attributes_And_Skills thing_to_update);
 
     std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
     std::shared_ptr<Skills> skills = std::make_shared<Skills>();

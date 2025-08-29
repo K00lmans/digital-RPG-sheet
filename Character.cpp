@@ -1,7 +1,7 @@
 #include "Character.h"
 
 Character::Character() {
-    constexpr Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0,};
+    constexpr Stat default_ability = {0, UNTRAINED, 0, 10}, default_skill = {0, UNTRAINED, 0};
     *attributes = {
         default_ability, default_ability, default_ability, default_ability, default_ability, default_ability,
         default_ability, default_ability
@@ -53,7 +53,7 @@ istream &operator>>(istream &stream, Character::Stat &stat) {
     std::getline(stream, data);
     const auto data_tokens = tokenize_string(";", data);
     stat.modifier = std::stoi(data_tokens[0]);
-    stat.training_level = static_cast<Character::Training_Level>(std::stoi(data_tokens[1]));
+    stat.training_level = static_cast<Training_Level>(std::stoi(data_tokens[1]));
     stat.training_points = std::stoi(data_tokens[2]);
     if (data.back() == ';') {
         stat.value = std::nullopt;
@@ -110,7 +110,7 @@ istream &operator>>(istream &stream, Character::Health &health) {
     return stream;
 }
 
-void Character::change_attributes(const string &attribute_to_change, int modification_value, const Flag flag) const {
+void Character::change_attributes(const Attributes_And_Skills attribute_to_change, int modification_value, const Flag flag) const {
     const auto selected_attribute = attributes->attribute_selection_map[attribute_to_change];
     if (flag == CHANGE_TO) {
         selected_attribute->value = modification_value;
@@ -120,7 +120,7 @@ void Character::change_attributes(const string &attribute_to_change, int modific
     attribute_update(selected_attribute);
 }
 
-void Character::train(const string &thing_to_train, const Flag type, int new_level, const Flag setting) {
+void Character::train(const Attributes_And_Skills thing_to_train, const Flag type, int new_level, const Flag setting) {
     Stat *selection;
     if (type == ATTRIBUTE) {
         selection = attributes->attribute_selection_map[thing_to_train];
@@ -157,7 +157,7 @@ int Character::handle_training_for_skills(int modifier, const Training_Level tra
     return modifier;
 }
 
-void Character::update_single_stat(const Flag type, const string &thing_to_update) {
+void Character::update_single_stat(const Flag type, const Attributes_And_Skills thing_to_update) {
     if (type == ATTRIBUTE) {
         attribute_update(attributes->attribute_selection_map[thing_to_update]);
     } else if (type == SKILL) {
@@ -253,4 +253,22 @@ unsigned int Character::get_max_health() const {
 
 unsigned int Character::get_temp_health() const {
     return health_info.temp_health;
+}
+
+std::shared_ptr<Character::Stat> Character::get_stat(const Attributes_And_Skills thing_to_get, const Flag type) const {
+    Stat stat_to_return;
+    if (type == ATTRIBUTE) {
+        stat_to_return = *attributes->attribute_selection_map[thing_to_get];
+    } else if (type == SKILL) {
+        stat_to_return = *skills->skill_selection_map[thing_to_get];
+    } else {
+        return nullptr;
+    }
+    return std::make_shared<Stat>(stat_to_return);
+}
+
+void Character::update_skills() {
+    for (int skill = END_OF_ATTRIBUTES + 1; skill < END_OF_SKILLS; skill++) {
+        update_single_stat(SKILL, static_cast<Attributes_And_Skills>(skill));
+    }
 }

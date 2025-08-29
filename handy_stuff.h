@@ -8,6 +8,19 @@
 #include <string>
 #include <chrono>
 
+enum Armor_Class {
+    NONE,
+    LIGHT,
+    MEDIUM,
+    HEAVY
+};
+
+enum Training_Level {
+    UNTRAINED,
+    TRAINED,
+    EXPERT
+};
+
 template<class ITEM, class SEARCHABLE>
 static bool contains(ITEM item, SEARCHABLE searchable) {
     for (auto searchable_item : searchable) {
