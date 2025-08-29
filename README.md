@@ -40,6 +40,9 @@ Once you have the files, you must install the dependencies for this program. The
   - [ ] [App Selection Menu](https://github.com/K00lmans/digital-RPG-sheet/issues/17)
   - [ ] [Detailed Update Information](https://github.com/K00lmans/digital-RPG-sheet/issues/18)
   - [ ] [Make Pretty](https://github.com/K00lmans/digital-RPG-sheet/issues/19)
+- [ ] [Mac Release](https://github.com/K00lmans/digital-RPG-sheet/milestone/10)
+  - [ ] [Mac Updater](https://github.com/K00lmans/digital-RPG-sheet/issues/20)
+  - [ ] [Mac Character Creator](https://github.com/K00lmans/digital-RPG-sheet/issues/21)
 - *More to come!*
 
 ## Repository Info
