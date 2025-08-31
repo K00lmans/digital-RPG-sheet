@@ -191,6 +191,7 @@ private:
     // Updates the scores of those stats that just average several attributes
     static void skill_with_just_averages(Stat *skill, const vector<Stat> &attributes_to_average);
 
+    // Returns lowest value of untrained, as that is how the rules are modified if untrained
     template<class SET>
     static Stat *get_highest(const SET &options, const Training_Level training_level) {
         auto first_item = options.begin();
