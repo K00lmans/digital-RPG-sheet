@@ -11,6 +11,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <vector>
+#include <list>
 #include "handy_stuff.h"
 
 using std::optional;
@@ -19,6 +20,7 @@ using std::endl;
 using std::ostream;
 using std::istream;
 using std::vector;
+using std::list;
 
 #define um std::unordered_map
 
@@ -33,7 +35,11 @@ public:
 
         // For use with health
         NORMAL, // Non-temp heath
-        TEMP // Temp health
+        TEMP, // Temp health
+
+        // For use with skill training
+        AVERAGE, // Stat is determined by averaging several stats
+        HIGHEST // Stat is determined by picking from the highest and lowest, takes precedent
     };
 
     enum Attributes_And_Skills {
@@ -70,6 +76,9 @@ public:
         Training_Level training_level;
         unsigned int training_points;
         optional<unsigned int> value; // Skills do not have a value
+
+        // An inversion operator
+        Stat operator-() const;
     };
 
     struct Attributes {
@@ -142,7 +151,7 @@ public:
     void change_attributes(Attributes_And_Skills attribute_to_change, int modification_value,
                            Flag flag = CHANGE_TO) const;
 
-    void train(Attributes_And_Skills thing_to_train, int new_level, Flag setting = CHANGE_TO);
+    void train(Attributes_And_Skills thing_to_train, int new_level, Flag setting = CHANGE_TO) const;
 
     // Returns true if damage dealt adds a level of attrition
     Health::Damage_Result deal_damage(unsigned int damage_dealt);
@@ -159,7 +168,7 @@ public:
 
     [[nodiscard]] unsigned int get_temp_health() const;
 
-    void update_skills();
+    void update_skills() const;
 
     // Returns a deep copy of a stat to prevent editing
     [[nodiscard]] Stat get_stat(Attributes_And_Skills thing_to_get) const;
@@ -175,9 +184,27 @@ private:
     static void attribute_update(Stat *attribute);
 
     // Handles the effect of training on a modifier
-    static int handle_training_for_skills(int modifier, Training_Level training);
+    static int handle_training_for_skills(int modifier, Training_Level training, Flag type = AVERAGE);
 
-    void update_single_stat(Attributes_And_Skills thing_to_update);
+    void update_single_stat(Attributes_And_Skills thing_to_update) const;
+
+    // Updates the scores of those stats that just average several attributes
+    static void skill_with_just_averages(Stat *skill, const vector<Stat> &attributes_to_average);
+
+    template<class SET>
+    static Stat *get_highest(const SET &options, const Training_Level training_level) {
+        auto first_item = options.begin();
+        Stat *highest_value_stat = *first_item, *lowest_value_stat = *first_item;
+        for (const auto &option: options) {
+            if (option->modifier > highest_value_stat->modifier) {
+                highest_value_stat = option;
+            }
+            if (option->modifier < lowest_value_stat->modifier) {
+                lowest_value_stat = option;
+            }
+        }
+        return training_level == UNTRAINED ? highest_value_stat : lowest_value_stat;
+    }
 
     std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
     std::shared_ptr<Skills> skills = std::make_shared<Skills>();
