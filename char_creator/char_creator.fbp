@@ -3824,7 +3824,7 @@
           <property name="border">5</property>
           <property name="flag">wxEXPAND|wxALIGN_CENTER_HORIZONTAL</property>
           <property name="proportion">1</property>
-          <object class="wxFlexGridSizer" expanded="false">
+          <object class="wxFlexGridSizer" expanded="true">
             <property name="cols">0</property>
             <property name="flexible_direction">wxBOTH</property>
             <property name="growablecols"></property>
@@ -6822,11 +6822,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag">wxEXPAND|wxALIGN_CENTER_HORIZONTAL</property>
               <property name="proportion">1</property>
-              <object class="wxBoxSizer" expanded="false">
+              <object class="wxBoxSizer" expanded="true">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer40</property>
                 <property name="orient">wxHORIZONTAL</property>
@@ -6864,7 +6864,7 @@
                     <property name="gripper">0</property>
                     <property name="hidden">0</property>
                     <property name="id">wxID_ANY</property>
-                    <property name="label">Insight: +0</property>
+                    <property name="label">Intuition: +0</property>
                     <property name="markup">0</property>
                     <property name="max_size"></property>
                     <property name="maximize_button">0</property>
@@ -6873,7 +6873,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">insightM</property>
+                    <property name="name">intuitionM</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -6935,7 +6935,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">insight_training</property>
+                    <property name="name">intuition_training</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -6956,7 +6956,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
-                    <event name="OnCheckBox">trained_insight</event>
+                    <event name="OnCheckBox">trained_intuition</event>
                   </object>
                 </object>
                 <object class="sizeritem" expanded="false">
@@ -7001,7 +7001,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">insight_mastery</property>
+                    <property name="name">intuition_mastery</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -7022,7 +7022,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
-                    <event name="OnCheckBox">mastered_insight</event>
+                    <event name="OnCheckBox">mastered_intuition</event>
                   </object>
                 </object>
               </object>

@@ -12,6 +12,8 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
+#include <nlohmann/json.hpp>
+#include <utility>
 #include "handy_stuff.h"
 
 using std::optional;
@@ -21,6 +23,8 @@ using std::ostream;
 using std::istream;
 using std::vector;
 using std::list;
+using std::pair;
+using nlohmann::json;
 
 #define um std::unordered_map
 
@@ -66,15 +70,14 @@ public:
         STEALTH,
         SLEIGHT_OF_HAND,
         MECHANICAL,
-        INSIGHT,
+        INTUITION,
         END_OF_SKILLS
     };
 
     // Attributes and skills have several elements inside of them, this struct contains all those values
     struct Stat {
         int modifier;
-        Training_Level training_level;
-        unsigned int training_points;
+        Training training_info;
         optional<unsigned int> value; // Skills do not have a value
 
         // An inversion operator
@@ -111,13 +114,13 @@ public:
         Stat stealth;
         Stat sleight_of_hand;
         Stat mechanical;
-        Stat insight;
+        Stat intuition;
         um<Attributes_And_Skills, Stat *> skill_selection_map = {
             {TEACHING, &teaching}, {DOCTORING, &doctoring}, {INTIMIDATION, &intimidation},
             {PERFORMANCE, &performance}, {ACROBATICS, &acrobatics}, {SUPERNATURALISM, &supernaturalism},
             {SURVIVAL, &survival}, {HISTORY, &history}, {NEGOTIATION, &negotiation}, {ATHLETICS, &athletics},
             {INVESTIGATION, &investigation}, {STEALTH, &stealth}, {SLEIGHT_OF_HAND, &sleight_of_hand},
-            {MECHANICAL, &mechanical}, {INSIGHT, &insight}
+            {MECHANICAL, &mechanical}, {INTUITION, &intuition}
         };
     };
 
@@ -128,20 +131,33 @@ public:
 
         // A way to describe if there are any extra results from taking damage
         enum Damage_Result {
-            NONE, // Nothing else happens
-            TEMP_HEALTH_DEPLETED, // All of temp health was used
-            ATTRITION_LIMIT, // Enough Damage was dealt to the base health to gain a level of attrition
-            HEALTH_DEPLETED, // The damage removed all their health
-            TEMP_AND_ATTRITION, // Both ATTRITION_LIMIT and TEMP_HEALTH_DEPLETED
-            TEMP_AND_HEALTH, // Both HEALTH_DEPLETED and TEMP_HEALTH_DEPLETED
-            HEALTH_AND_ATTRITION, // Both HEALTH_DEPLETED and ATTRITION_LIMIT happen
-            BAD_TIME // All non-combined effects
+            NONE = 0b0, // Nothing else happens
+            TEMP_HEALTH_DEPLETED = 0b001, // All of temp health was used
+            ATTRITION_LIMIT = 0b010, // Enough Damage was dealt to the base health to gain a level of attrition
+            HEALTH_DEPLETED = 0b100, // The damage removed all their health
+            TEMP_AND_ATTRITION = 0b011, // Both ATTRITION_LIMIT and TEMP_HEALTH_DEPLETED
+            TEMP_AND_HEALTH = 0b101, // Both HEALTH_DEPLETED and TEMP_HEALTH_DEPLETED
+            HEALTH_AND_ATTRITION = 0b110, // Both HEALTH_DEPLETED and ATTRITION_LIMIT happen
+            BAD_TIME = 0b111 // All non-combined effects
         };
+    };
+
+    struct Armor_Training {
+        Training light_armor;
+        Training medium_armor;
+        Training heavy_armor;
+    };
+
+    struct Weapon_Training {
+        Training basic_weapons;
+        Training simple_weapons;
+        vector<pair<string, Training> > advanced_weapons;
+        vector<pair<string, Training> > complicated_weapons;
     };
 
     Character(); // Assumes default values
 
-    explicit Character(std::ifstream char_file);
+    explicit Character(std::ifstream &char_file);
 
     void save_character(const string &path) const;
 
@@ -174,8 +190,8 @@ public:
     [[nodiscard]] Stat get_stat(Attributes_And_Skills thing_to_get) const;
 
     std::string name;
-    unsigned int extra_attribute_points{};
-    double speed{};
+    int extra_attribute_points;
+    double speed;
     Armor_Class armor_class;
     string lineage;
     string background;
@@ -210,22 +226,45 @@ private:
     std::shared_ptr<Attributes> attributes = std::make_shared<Attributes>();
     std::shared_ptr<Skills> skills = std::make_shared<Skills>();
     Health health_info{};
+    Armor_Training armor_training{};
+    Weapon_Training weapon_training;
 };
 
-ostream &operator<<(ostream &stream, const Character::Stat &stat);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Training, training_level, training_points)
 
-istream &operator>>(istream &stream, Character::Stat &stat);
+template<class T>
+void to_json(json &j, const optional<T> &optional) {
+    if (optional.has_value()) {
+        j = optional->value;
+    } else {
+        j = nullptr;
+    }
+}
 
-ostream &operator<<(ostream &stream, const Character::Attributes &attributes);
+template<class T>
+void from_json(const json &j, optional<T> &optional) {
+    if (j.is_null()) {
+        optional = std::nullopt;
+    } else {
+        optional->value = j.get<T>();
+    }
+}
 
-istream &operator>>(istream &stream, Character::Attributes &attributes);
+void to_json(json &j, const Character::Stat &stat);
+void from_json(const json &j, Character::Stat &stat);
 
-ostream &operator<<(ostream &stream, const Character::Skills &skills);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Character::Attributes, intelligence, wisdom, perception, strength, presence,
+                                   fortitude, agility, dexterity)
 
-istream &operator>>(istream &stream, Character::Skills &skills);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Character::Skills, teaching, doctoring, intimidation, performance, acrobatics,
+                                   supernaturalism, survival, history, negotiation, athletics, investigation, stealth,
+                                   sleight_of_hand, mechanical, intuition)
 
-ostream &operator<<(ostream &stream, const Character::Health &health);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Character::Health, current_health, max_health, temp_health)
 
-istream &operator>>(istream &stream, Character::Health &health);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Character::Armor_Training, light_armor, medium_armor, heavy_armor)
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Character::Weapon_Training, basic_weapons, simple_weapons, advanced_weapons,
+                                   complicated_weapons)
 
 #endif //RPG_SHEET_CHARACTER_H

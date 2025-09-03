@@ -16,90 +16,52 @@ Character::Character() {
     health_info = {0, 0, 0};
     speed = 15;
     armor_class = NONE;
+    armor_training = {UNTRAINED, 0, UNTRAINED, 0, UNTRAINED, 0};
+    weapon_training = {UNTRAINED, 0, UNTRAINED, 0};
 }
 
 void Character::save_character(const string &path) const {
+    json save_data;
+    save_data["name"] = name;
+    save_data["speed"] = speed;
+    save_data["armor_class"] = armor_class;
+    save_data["lineage"] = lineage;
+    save_data["background"] = background;
+    save_data["attributes"] = *attributes;
+    save_data["skills"] = *skills;
+    save_data["health_info"] = health_info;
+    save_data["armor_training"] = armor_training;
+    save_data["weapon_training"] = weapon_training;
     std::ofstream output_file(path);
-    output_file << name << endl << *attributes << *skills << health_info << extra_attribute_points << ";" << speed <<
-            ";" << armor_class << ";" << lineage << ";" << background;
+    output_file << save_data;
     output_file.close();
 }
 
-Character::Character(std::ifstream char_file) {
-    std::getline(char_file, name);
-    char_file >> *attributes >> *skills >> health_info;
-    string data;
-    std::getline(char_file, data);
-    const auto data_tokens = tokenize_string(";", data);
-    extra_attribute_points = std::stoi(data_tokens[0]);
-    speed = std::stof(data_tokens[1]);
-    armor_class = static_cast<Armor_Class>(std::stoi(data_tokens[2]));
-    lineage = data_tokens[3];
-    background = data_tokens[4];
-}
-
-ostream &operator<<(ostream &stream, const Character::Stat &stat) {
-    stream << stat.modifier << ";" << stat.training_level << ";" << stat.training_points << ";";
-    stat.value.has_value() ? stream << stat.value.value() << endl : stream << endl;
-    return stream;
-}
-
-istream &operator>>(istream &stream, Character::Stat &stat) {
-    string data;
-    std::getline(stream, data);
-    const auto data_tokens = tokenize_string(";", data);
-    stat.modifier = std::stoi(data_tokens[0]);
-    stat.training_level = static_cast<Training_Level>(std::stoi(data_tokens[1]));
-    stat.training_points = std::stoi(data_tokens[2]);
-    data.back() == ';' ? stat.value = std::nullopt : stat.value = std::stoi(data_tokens[3]);
-    return stream;
-}
-
-ostream &operator<<(ostream &stream, const Character::Attributes &attributes) {
-    stream << attributes.agility << attributes.dexterity << attributes.fortitude << attributes.intelligence <<
-            attributes.perception << attributes.presence << attributes.strength << attributes.wisdom;
-    return stream;
-}
-
-istream &operator>>(istream &stream, Character::Attributes &attributes) {
-    stream >> attributes.agility >> attributes.dexterity >> attributes.fortitude >> attributes.intelligence >>
-            attributes.perception >> attributes.presence >> attributes.strength >> attributes.wisdom;
-    return stream;
-}
-
-ostream &operator<<(ostream &stream, const Character::Skills &skills) {
-    stream << skills.acrobatics << skills.athletics << skills.doctoring << skills.history << skills.insight << skills.
-            intimidation << skills.investigation << skills.mechanical << skills.negotiation << skills.performance <<
-            skills.sleight_of_hand << skills.stealth << skills.supernaturalism << skills.survival << skills.teaching;
-    return stream;
-}
-
-istream &operator>>(istream &stream, Character::Skills &skills) {
-    stream >> skills.acrobatics >> skills.athletics >> skills.doctoring >> skills.history >> skills.insight >> skills.
-            intimidation >> skills.investigation >> skills.mechanical >> skills.negotiation >> skills.performance >>
-            skills.sleight_of_hand >> skills.stealth >> skills.supernaturalism >> skills.survival >> skills.teaching;
-    return stream;
+Character::Character(std::ifstream &char_file) {
+    json save_data;
+    char_file >> save_data;
+    name = save_data["name"];
+    speed = save_data["speed"];
+    armor_class = save_data["armor_class"];
+    lineage = save_data["lineage"];
+    background = save_data["background"];
+    *attributes = save_data["attributes"];
+    *skills = save_data["skills"];
+    health_info = save_data["health_info"];
+    armor_training = save_data["armor_training"];
+    weapon_training = save_data["weapon_training"];
+    int attribute_points = 90;
+    for (int attributes_i = 0; attributes_i < END_OF_ATTRIBUTES; attributes_i++) {
+        attribute_points -= attributes->attribute_selection_map[static_cast<Attributes_And_Skills>(attributes_i)]->
+                value.value();
+    }
+    extra_attribute_points = attribute_points;
 }
 
 Character::Character(const string &file_path) {
-    std::ifstream input_file(file_path);
-    *this = Character(std::move(input_file));
-    input_file.close();
-}
-
-ostream &operator<<(ostream &stream, const Character::Health &health) {
-    stream << health.current_health << ";" << health.max_health << ";" << health.temp_health << endl;
-    return stream;
-}
-
-istream &operator>>(istream &stream, Character::Health &health) {
-    string data;
-    std::getline(stream, data);
-    const auto data_tokens = tokenize_string(";", data);
-    health.current_health = std::stoi(data_tokens[0]);
-    health.max_health = std::stoi(data_tokens[1]);
-    health.temp_health = std::stoi(data_tokens[2]);
-    return stream;
+    std::ifstream save_file(file_path);
+    *this = Character(save_file);
+    save_file.close();
 }
 
 void Character::change_attributes(const Attributes_And_Skills attribute_to_change, int modification_value,
@@ -119,10 +81,10 @@ void Character::train(const Attributes_And_Skills thing_to_train, int new_level,
         ? selection = attributes->attribute_selection_map[thing_to_train]
         : selection = skills->skill_selection_map[thing_to_train];
     if (setting == CHANGE_TO) {
-        selection->training_level = static_cast<Training_Level>(new_level);
+        selection->training_info.training_level = static_cast<Training_Level>(new_level);
     } else if (setting == ADD_TO) {
-        selection->training_level = static_cast<Training_Level>(
-            (selection->training_level + new_level) % (2 + selection->value.has_value()));
+        selection->training_info.training_level = static_cast<Training_Level>(
+            (selection->training_info.training_level + new_level) % (2 + selection->value.has_value()));
     } else {
         return;
     }
@@ -130,7 +92,7 @@ void Character::train(const Attributes_And_Skills thing_to_train, int new_level,
 }
 
 void Character::attribute_update(Stat *attribute) {
-    attribute->modifier = attribute->value.value() / 2 - 5 + 5 * attribute->training_level;
+    attribute->modifier = attribute->value.value() / 2 - 5 + 5 * attribute->training_info.training_level;
 }
 
 int Character::handle_training_for_skills(int modifier, const Training_Level training, const Flag type) {
@@ -170,7 +132,7 @@ void Character::update_single_stat(const Attributes_And_Skills thing_to_update) 
                 skill_with_just_averages(selected_skill, {
                                              *get_highest<vector<Stat *> >(
                                                  {&attributes->strength, &attributes->presence},
-                                                 selected_skill->training_level),
+                                                 selected_skill->training_info.training_level),
                                              attributes->wisdom
                                          });
                 break;
@@ -184,7 +146,7 @@ void Character::update_single_stat(const Attributes_And_Skills thing_to_update) 
                 type = HIGHEST;
                 selected_skill->modifier = get_highest<vector<Stat *> >(
                     {&attributes->wisdom, std::make_shared<Stat>(-attributes->wisdom).get()},
-                    selected_skill->training_level)->modifier;
+                    selected_skill->training_info.training_level)->modifier;
                 break;
             case SURVIVAL:
                 skill_with_just_averages(selected_skill, {attributes->wisdom, attributes->fortitude});
@@ -192,9 +154,10 @@ void Character::update_single_stat(const Attributes_And_Skills thing_to_update) 
             case NEGOTIATION: {
                 type = HIGHEST;
                 auto possible_attributes = list{&attributes->presence, &attributes->intelligence, &attributes->wisdom};
-                auto highest_attribute = get_highest(possible_attributes, selected_skill->training_level);
+                auto highest_attribute = get_highest(possible_attributes, selected_skill->training_info.training_level);
                 possible_attributes.remove(highest_attribute);
-                auto second_highest_attribute = get_highest(possible_attributes, selected_skill->training_level);
+                auto second_highest_attribute = get_highest(possible_attributes,
+                                                            selected_skill->training_info.training_level);
                 skill_with_just_averages(selected_skill, {highest_attribute, second_highest_attribute});
                 break;
             }
@@ -204,10 +167,10 @@ void Character::update_single_stat(const Attributes_And_Skills thing_to_update) 
                                              attributes->wisdom,
                                              *get_highest<vector<Stat *> >(
                                                  {&attributes->strength, &attributes->agility},
-                                                 selected_skill->training_level)
+                                                 selected_skill->training_info.training_level)
                                          });
                 break;
-            case INSIGHT:
+            case INTUITION:
             case INVESTIGATION:
                 skill_with_just_averages(selected_skill, {attributes->intelligence, attributes->perception});
                 break;
@@ -218,44 +181,37 @@ void Character::update_single_stat(const Attributes_And_Skills thing_to_update) 
                                              attributes->wisdom,
                                              *get_highest<vector<Stat *> >(
                                                  {&attributes->dexterity, &attributes->presence, &averaged_stat},
-                                                 selected_skill->training_level)
+                                                 selected_skill->training_info.training_level)
                                          });
                 break;
             }
             default: break; // Should never be hit
         }
-        selected_skill->modifier = handle_training_for_skills(selected_skill->modifier, selected_skill->training_level,
+        selected_skill->modifier = handle_training_for_skills(selected_skill->modifier,
+                                                              selected_skill->training_info.training_level,
                                                               type);
     }
 }
 
 Character::Health::Damage_Result Character::deal_damage(unsigned int damage_dealt) {
-    if (damage_dealt >= health_info.current_health) {
-        health_info.current_health = 0;
-        if (damage_dealt >= health_info.max_health / 4) {
-            if (health_info.temp_health != 0) {
-                health_info.temp_health = 0;
-                return Health::BAD_TIME;
-            }
-            return Health::HEALTH_AND_ATTRITION;
-        }
-        if (health_info.temp_health != 0) {
-            health_info.temp_health = 0;
-            return Health::TEMP_AND_HEALTH;
-        }
-        return Health::HEALTH_DEPLETED;
-    }
-    health_info.current_health -= damage_dealt;
+    int damage_result = 0;
     if (damage_dealt >= health_info.temp_health) {
+        damage_result += Health::TEMP_HEALTH_DEPLETED;
         damage_dealt -= health_info.temp_health;
         health_info.temp_health = 0;
         if (damage_dealt >= health_info.max_health / 4) {
-            return Health::TEMP_AND_ATTRITION;
+            damage_result += Health::ATTRITION_LIMIT;
         }
-        return Health::TEMP_HEALTH_DEPLETED;
+        if (damage_dealt >= health_info.current_health) {
+            damage_result += Health::HEALTH_DEPLETED;
+            health_info.current_health = 0;
+        } else {
+            health_info.current_health -= damage_dealt;
+        }
+    } else {
+        health_info.temp_health -= damage_dealt;
     }
-    health_info.temp_health -= damage_dealt;
-    return Health::NONE;
+    return static_cast<Health::Damage_Result>(damage_result);
 }
 
 void Character::heal(unsigned int amount, const Flag type) {
@@ -287,7 +243,8 @@ int Character::calculate_protection_score() const {
             protection_score += attributes->agility.modifier;
             break;
         case LIGHT:
-            break; // Need to make item training system first
+            protection_score += 5 + attributes->agility.modifier / (1 + armor_training.light_armor.training_level);
+            break;
         case MEDIUM: {
             int agility_component = attributes->agility.modifier;
             if (abs(agility_component) > 5) {
@@ -319,11 +276,9 @@ unsigned int Character::get_temp_health() const {
 }
 
 Character::Stat Character::get_stat(const Attributes_And_Skills thing_to_get) const {
-    Stat stat_to_return;
-    thing_to_get < END_OF_ATTRIBUTES
-        ? stat_to_return = *attributes->attribute_selection_map[thing_to_get]
-        : stat_to_return = *skills->skill_selection_map[thing_to_get];
-    return stat_to_return;
+    return thing_to_get < END_OF_ATTRIBUTES
+               ? *attributes->attribute_selection_map[thing_to_get]
+               : *skills->skill_selection_map[thing_to_get];
 }
 
 void Character::update_skills() const {
@@ -345,4 +300,14 @@ Character::Stat Character::Stat::operator-() const {
     auto return_thing = *this;
     return_thing.modifier = -return_thing.modifier;
     return return_thing;
+}
+
+void to_json(json &j, const Character::Stat &stat) {
+    j = {{"modifier", stat.modifier}, {"training_info", stat.training_info}, {"value", stat.value}};
+}
+
+void from_json(const json &j, Character::Stat &stat) {
+    stat.modifier = j["modifier"];
+    stat.training_info = j["training_info"];
+    stat.value = j["value"];
 }

@@ -131,9 +131,9 @@ class window : public wxFrame
 		wxStaticText* mechanicalM;
 		wxCheckBox* mechanical_training;
 		wxCheckBox* mechanical_mastery;
-		wxStaticText* insightM;
-		wxCheckBox* insight_training;
-		wxCheckBox* insight_mastery;
+		wxStaticText* intuitionM;
+		wxCheckBox* intuition_training;
+		wxCheckBox* intuition_mastery;
 		wxStaticText* m_staticText95;
 		wxChoice* weapon;
 		wxCheckBox* weapon_training;
@@ -199,8 +199,8 @@ class window : public wxFrame
 		virtual void mastered_SoH( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_mechanical( wxCommandEvent& event ) { event.Skip(); }
 		virtual void mastered_mechanical( wxCommandEvent& event ) { event.Skip(); }
-		virtual void trained_insight( wxCommandEvent& event ) { event.Skip(); }
-		virtual void mastered_insight( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_intuition( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_intuition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void weapon_chosen( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_weapon( wxCommandEvent& event ) { event.Skip(); }
 		virtual void armor_chosen( wxCommandEvent& event ) { event.Skip(); }

@@ -696,19 +696,19 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	wxBoxSizer* bSizer40;
 	bSizer40 = new wxBoxSizer( wxHORIZONTAL );
 
-	insightM = new wxStaticText( this, wxID_ANY, _("Insight: +0"), wxDefaultPosition, wxDefaultSize, 0 );
-	insightM->Wrap( -1 );
-	bSizer40->Add( insightM, 0, wxALL, 5 );
+	intuitionM = new wxStaticText( this, wxID_ANY, _("Intuition: +0"), wxDefaultPosition, wxDefaultSize, 0 );
+	intuitionM->Wrap( -1 );
+	bSizer40->Add( intuitionM, 0, wxALL, 5 );
 
-	insight_training = new wxCheckBox( this, wxID_ANY, _("T"), wxDefaultPosition, wxDefaultSize, 0 );
-	insight_training->Enable( false );
+	intuition_training = new wxCheckBox( this, wxID_ANY, _("T"), wxDefaultPosition, wxDefaultSize, 0 );
+	intuition_training->Enable( false );
 
-	bSizer40->Add( insight_training, 0, wxTOP|wxBOTTOM|wxLEFT, 5 );
+	bSizer40->Add( intuition_training, 0, wxTOP|wxBOTTOM|wxLEFT, 5 );
 
-	insight_mastery = new wxCheckBox( this, wxID_ANY, _("E"), wxDefaultPosition, wxDefaultSize, 0 );
-	insight_mastery->Enable( false );
+	intuition_mastery = new wxCheckBox( this, wxID_ANY, _("E"), wxDefaultPosition, wxDefaultSize, 0 );
+	intuition_mastery->Enable( false );
 
-	bSizer40->Add( insight_mastery, 0, wxTOP|wxBOTTOM, 5 );
+	bSizer40->Add( intuition_mastery, 0, wxTOP|wxBOTTOM, 5 );
 
 
 	fgSizer3->Add( bSizer40, 1, wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
@@ -842,8 +842,8 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	SoH_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_SoH ), NULL, this );
 	mechanical_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_mechanical ), NULL, this );
 	mechanical_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_mechanical ), NULL, this );
-	insight_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_insight ), NULL, this );
-	insight_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_insight ), NULL, this );
+	intuition_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_intuition ), NULL, this );
+	intuition_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_intuition ), NULL, this );
 	weapon->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( window::weapon_chosen ), NULL, this );
 	weapon_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_weapon ), NULL, this );
 	armor->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( window::armor_chosen ), NULL, this );

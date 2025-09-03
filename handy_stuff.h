@@ -21,6 +21,11 @@ enum Training_Level {
     EXPERT
 };
 
+struct Training {
+    Training_Level training_level;
+    unsigned int training_points;
+};
+
 template<class ITEM, class SEARCHABLE>
 static bool contains(ITEM item, SEARCHABLE searchable) {
     for (auto searchable_item : searchable) {
