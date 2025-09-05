@@ -13,4 +13,4 @@ find_package(libzip CONFIG REQUIRED)
 target_link_libraries(updater PRIVATE libzip::zip)
 
 # An internal version number to help it know when to update
-add_compile_definitions(updater PRIVATE VERSION="1.0.0")
+add_compile_definitions(updater PRIVATE VERSION="0.2.0")

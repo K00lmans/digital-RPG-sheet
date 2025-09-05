@@ -57,18 +57,18 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	int_up->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_UP), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1411->Add( int_up, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText361 = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText361->Wrap( -1 );
-	sbSizer1411->Add( m_staticText361, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
+	intV = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	intV->Wrap( -1 );
+	sbSizer1411->Add( intV, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
 
 	int_down = new wxBitmapButton( sbSizer1411->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	int_down->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_DOWN), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1411->Add( int_down, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText1411 = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText1411->Wrap( -1 );
-	sbSizer1411->Add( m_staticText1411, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	intM = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
+	intM->Wrap( -1 );
+	sbSizer1411->Add( intM, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	int_training = new wxCheckBox( sbSizer1411->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	int_training->Enable( false );
@@ -86,9 +86,9 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	wis_up->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_UP), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1412->Add( wis_up, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText362 = new wxStaticText( sbSizer1412->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText362->Wrap( -1 );
-	sbSizer1412->Add( m_staticText362, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
+	wisV = new wxStaticText( sbSizer1412->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	wisV->Wrap( -1 );
+	sbSizer1412->Add( wisV, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
 
 	wis_down = new wxBitmapButton( sbSizer1412->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -115,18 +115,18 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	per_up->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_UP), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1413->Add( per_up, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText363 = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText363->Wrap( -1 );
-	sbSizer1413->Add( m_staticText363, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
+	perV = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	perV->Wrap( -1 );
+	sbSizer1413->Add( perV, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
 
 	per_down = new wxBitmapButton( sbSizer1413->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	per_down->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_DOWN), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1413->Add( per_down, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText1413 = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText1413->Wrap( -1 );
-	sbSizer1413->Add( m_staticText1413, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	perM = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
+	perM->Wrap( -1 );
+	sbSizer1413->Add( perM, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	per_training = new wxCheckBox( sbSizer1413->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	per_training->Enable( false );

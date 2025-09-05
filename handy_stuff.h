@@ -22,8 +22,8 @@ enum Training_Level {
 };
 
 struct Training {
-    Training_Level training_level;
-    unsigned int training_points;
+    Training_Level training_level = UNTRAINED;
+    unsigned int training_points = 0;
 };
 
 template<class ITEM, class SEARCHABLE>

@@ -155,7 +155,7 @@
           <property name="border">5</property>
           <property name="flag">wxEXPAND|wxALIGN_RIGHT</property>
           <property name="proportion">1</property>
-          <object class="wxGridSizer" expanded="true">
+          <object class="wxGridSizer" expanded="false">
             <property name="cols">2</property>
             <property name="hgap">0</property>
             <property name="minimum_size"></property>
@@ -465,20 +465,20 @@
             </object>
           </object>
         </object>
-        <object class="sizeritem" expanded="false">
+        <object class="sizeritem" expanded="true">
           <property name="border">5</property>
           <property name="flag">wxEXPAND|wxALIGN_CENTER_VERTICAL</property>
           <property name="proportion">1</property>
-          <object class="wxBoxSizer" expanded="false">
+          <object class="wxBoxSizer" expanded="true">
             <property name="minimum_size"></property>
             <property name="name">bSizer12</property>
             <property name="orient">wxHORIZONTAL</property>
             <property name="permission">none</property>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">Int</property>
                 <property name="minimum_size"></property>
@@ -603,7 +603,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_staticText361</property>
+                    <property name="name">intV</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -740,7 +740,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_staticText1411</property>
+                    <property name="name">intM</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -828,11 +828,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">Wis</property>
                 <property name="minimum_size"></property>
@@ -957,7 +957,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_staticText362</property>
+                    <property name="name">wisV</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1182,11 +1182,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">Per</property>
                 <property name="minimum_size"></property>
@@ -1311,7 +1311,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_staticText363</property>
+                    <property name="name">perV</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1447,7 +1447,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_staticText1413</property>
+                    <property name="name">perM</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1535,11 +1535,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">Str</property>
                 <property name="minimum_size"></property>
@@ -1889,11 +1889,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">Pre</property>
                 <property name="minimum_size"></property>
@@ -2243,11 +2243,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">For</property>
                 <property name="minimum_size"></property>
@@ -2597,11 +2597,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">Agi</property>
                 <property name="minimum_size"></property>
@@ -2951,11 +2951,11 @@
                 </object>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag"></property>
               <property name="proportion">1</property>
-              <object class="wxStaticBoxSizer" expanded="false">
+              <object class="wxStaticBoxSizer" expanded="true">
                 <property name="id">wxID_ANY</property>
                 <property name="label">Dex</property>
                 <property name="minimum_size"></property>
