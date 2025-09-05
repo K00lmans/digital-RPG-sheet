@@ -35,6 +35,7 @@ int main() {
             update = true;
             fs::create_directory("data");
             fs::create_directory("saves");
+            sleep(1.0);
         } else {
             println("Data folder found, checking for updates...");
             if (github_data.find("name").value() != VERSION) {
@@ -42,6 +43,7 @@ int main() {
                 println("Update is available. Starting update...");
             } else {
                 println("No update found, you are using the latest version, {}", VERSION);
+                sleep(1.0);
             }
         }
 
@@ -79,14 +81,17 @@ int main() {
                 }
             }
             println("Update installed. Restarting...");
+            sleep(1.0);
             system("start updater.exe");
             return 0;
         }
     } else {
         fs::remove(fs::path("old_updater.exe")); // Removes the outdated version
         println("Successfully restarted after updating to {}", VERSION);
+        sleep(1.0);
     }
     println("Launching character creator...");
+    sleep(1.0);
     system("start data/char_creator.exe");
     return 0;
 }

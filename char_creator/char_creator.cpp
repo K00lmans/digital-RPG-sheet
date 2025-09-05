@@ -1,7 +1,5 @@
 #include "char_creator.h"
 
-#include <memory>
-
 wxIMPLEMENT_APP(Char_Creator);
 
 bool Char_Creator::OnInit() {
@@ -44,9 +42,13 @@ void UI::update_visuals() const {
     for (const auto &ui_attribute: attributes) {
         // What a mess lol
         ui_attribute.value->SetLabel(
-            std::to_string(data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).value.value()));
+            std::to_string(
+                data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).value.value()));
         ui_attribute.modifier->SetLabel(
-            std::to_string(data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).modifier));
+            get_sign(data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).modifier) == -1
+                ? "-"
+                : "+" + std::to_string(
+                      data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).modifier));
         ui_attribute.trained_check->SetValue(
             data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).training_info.training_level);
         if (data->lineage.empty()) {
@@ -80,7 +82,7 @@ void Load_Window::get_files() const {
     const auto selection = file_selection->GetStringSelection();
 
     file_selection->Clear();
-    for (const auto &file : std::filesystem::directory_iterator(SAVE_LOCATION)) {
+    for (const auto &file: std::filesystem::directory_iterator(SAVE_LOCATION)) {
         if (file.path().extension().string() == ".char") {
             file_selection->Append(file.path().string());
         }
