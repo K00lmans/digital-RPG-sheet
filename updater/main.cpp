@@ -38,6 +38,7 @@ int main() {
             update = true;
             fs::create_directory("data");
             fs::create_directory("saves");
+            sleep(1.0);
         } else {
             println("Data folder found, checking for updates...");
             if (github_data.find("name").value() != VERSION) {
@@ -45,6 +46,7 @@ int main() {
                 println("Update is available. Starting update...");
             } else {
                 println("No update found, you are using the latest version, {}", VERSION);
+                sleep(1.0);
             }
         }
 
@@ -71,7 +73,7 @@ int main() {
                     auto file_data = zipped_file->get_copy_of_file_data();
                     delete zipped_file;
                     auto unzip_location = get_unzip_location(file_name);
-                    for (const auto &file_in_zip: file_data) {
+                    for (const auto &file_in_zip : file_data) {
                         ofstream file_to_write(unzip_location + file_in_zip.file_name, std::ios::binary);
                         file_to_write.write(file_in_zip.file_binary.c_str(), file_in_zip.file_binary.size());
                         file_to_write.close();
@@ -81,14 +83,17 @@ int main() {
                 }
             }
             println("Update installed. Restarting...");
+            sleep(1.0);
             start_another_program("updater.exe");
             return 0;
         }
     } else {
         fs::remove(fs::path("old_updater.exe")); // Removes the outdated version
         println("Successfully restarted after updating to {}", VERSION);
+        sleep(1.0);
     }
     println("Launching character creator...");
+    sleep(1.0);
     start_another_program("data/char_creator.exe");
     return 0;
 }

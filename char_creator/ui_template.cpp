@@ -28,17 +28,23 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 
 	fgSizer2->Add( sbSizer13, 1, wxALIGN_CENTER_VERTICAL, 5 );
 
-	wxBoxSizer* bSizer25;
-	bSizer25 = new wxBoxSizer( wxVERTICAL );
+	wxGridSizer* gSizer1;
+	gSizer1 = new wxGridSizer( 0, 2, 0, 0 );
 
 	save_button = new wxButton( this, wxID_ANY, _("Save"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer25->Add( save_button, 0, wxALL|wxALIGN_RIGHT, 5 );
+	gSizer1->Add( save_button, 0, wxALL|wxALIGN_RIGHT, 5 );
+
+	new_button = new wxButton( this, wxID_ANY, _("New"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer1->Add( new_button, 0, wxALL, 5 );
+
+	save_as_button = new wxButton( this, wxID_ANY, _("Save As"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer1->Add( save_as_button, 0, wxALL, 5 );
 
 	load_button = new wxButton( this, wxID_ANY, _("Load"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer25->Add( load_button, 0, wxALL|wxALIGN_RIGHT, 5 );
+	gSizer1->Add( load_button, 0, wxALL|wxALIGN_RIGHT, 5 );
 
 
-	fgSizer2->Add( bSizer25, 1, wxEXPAND, 5 );
+	fgSizer2->Add( gSizer1, 1, wxEXPAND|wxALIGN_RIGHT, 5 );
 
 	wxBoxSizer* bSizer12;
 	bSizer12 = new wxBoxSizer( wxHORIZONTAL );
@@ -51,18 +57,18 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	int_up->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_UP), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1411->Add( int_up, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText361 = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText361->Wrap( -1 );
-	sbSizer1411->Add( m_staticText361, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
+	intV = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	intV->Wrap( -1 );
+	sbSizer1411->Add( intV, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
 
 	int_down = new wxBitmapButton( sbSizer1411->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	int_down->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_DOWN), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1411->Add( int_down, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText1411 = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText1411->Wrap( -1 );
-	sbSizer1411->Add( m_staticText1411, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	intM = new wxStaticText( sbSizer1411->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
+	intM->Wrap( -1 );
+	sbSizer1411->Add( intM, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	int_training = new wxCheckBox( sbSizer1411->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	int_training->Enable( false );
@@ -80,9 +86,9 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	wis_up->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_UP), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1412->Add( wis_up, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText362 = new wxStaticText( sbSizer1412->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText362->Wrap( -1 );
-	sbSizer1412->Add( m_staticText362, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
+	wisV = new wxStaticText( sbSizer1412->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	wisV->Wrap( -1 );
+	sbSizer1412->Add( wisV, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
 
 	wis_down = new wxBitmapButton( sbSizer1412->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -109,18 +115,18 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	per_up->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_UP), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1413->Add( per_up, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText363 = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText363->Wrap( -1 );
-	sbSizer1413->Add( m_staticText363, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
+	perV = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	perV->Wrap( -1 );
+	sbSizer1413->Add( perV, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxLEFT, 5 );
 
 	per_down = new wxBitmapButton( sbSizer1413->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	per_down->SetBitmap( wxArtProvider::GetBitmap( wxASCII_STR(wxART_GO_DOWN), wxASCII_STR(wxART_BUTTON) ) );
 	sbSizer1413->Add( per_down, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxRIGHT|wxLEFT, 5 );
 
-	m_staticText1413 = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText1413->Wrap( -1 );
-	sbSizer1413->Add( m_staticText1413, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	perM = new wxStaticText( sbSizer1413->GetStaticBox(), wxID_ANY, _("+0"), wxDefaultPosition, wxDefaultSize, 0 );
+	perM->Wrap( -1 );
+	sbSizer1413->Add( perM, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	per_training = new wxCheckBox( sbSizer1413->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	per_training->Enable( false );
@@ -690,19 +696,19 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	wxBoxSizer* bSizer40;
 	bSizer40 = new wxBoxSizer( wxHORIZONTAL );
 
-	insightM = new wxStaticText( this, wxID_ANY, _("Insight: +0"), wxDefaultPosition, wxDefaultSize, 0 );
-	insightM->Wrap( -1 );
-	bSizer40->Add( insightM, 0, wxALL, 5 );
+	intuitionM = new wxStaticText( this, wxID_ANY, _("Intuition: +0"), wxDefaultPosition, wxDefaultSize, 0 );
+	intuitionM->Wrap( -1 );
+	bSizer40->Add( intuitionM, 0, wxALL, 5 );
 
-	insight_training = new wxCheckBox( this, wxID_ANY, _("T"), wxDefaultPosition, wxDefaultSize, 0 );
-	insight_training->Enable( false );
+	intuition_training = new wxCheckBox( this, wxID_ANY, _("T"), wxDefaultPosition, wxDefaultSize, 0 );
+	intuition_training->Enable( false );
 
-	bSizer40->Add( insight_training, 0, wxTOP|wxBOTTOM|wxLEFT, 5 );
+	bSizer40->Add( intuition_training, 0, wxTOP|wxBOTTOM|wxLEFT, 5 );
 
-	insight_mastery = new wxCheckBox( this, wxID_ANY, _("E"), wxDefaultPosition, wxDefaultSize, 0 );
-	insight_mastery->Enable( false );
+	intuition_mastery = new wxCheckBox( this, wxID_ANY, _("E"), wxDefaultPosition, wxDefaultSize, 0 );
+	intuition_mastery->Enable( false );
 
-	bSizer40->Add( insight_mastery, 0, wxTOP|wxBOTTOM, 5 );
+	bSizer40->Add( intuition_mastery, 0, wxTOP|wxBOTTOM, 5 );
 
 
 	fgSizer3->Add( bSizer40, 1, wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
@@ -781,6 +787,8 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 
 	// Connect Events
 	save_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::save ), NULL, this );
+	new_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::new_char ), NULL, this );
+	save_as_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::save_as ), NULL, this );
 	load_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::load ), NULL, this );
 	int_up->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::increase_int ), NULL, this );
 	int_down->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::decrease_int ), NULL, this );
@@ -834,8 +842,8 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	SoH_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_SoH ), NULL, this );
 	mechanical_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_mechanical ), NULL, this );
 	mechanical_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_mechanical ), NULL, this );
-	insight_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_insight ), NULL, this );
-	insight_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_insight ), NULL, this );
+	intuition_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_intuition ), NULL, this );
+	intuition_mastery->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::mastered_intuition ), NULL, this );
 	weapon->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( window::weapon_chosen ), NULL, this );
 	weapon_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_weapon ), NULL, this );
 	armor->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( window::armor_chosen ), NULL, this );

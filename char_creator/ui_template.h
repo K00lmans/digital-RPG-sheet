@@ -40,21 +40,23 @@ class window : public wxFrame
 	protected:
 		wxTextCtrl* char_name;
 		wxButton* save_button;
+		wxButton* new_button;
+		wxButton* save_as_button;
 		wxButton* load_button;
 		wxBitmapButton* int_up;
-		wxStaticText* m_staticText361;
+		wxStaticText* intV;
 		wxBitmapButton* int_down;
-		wxStaticText* m_staticText1411;
+		wxStaticText* intM;
 		wxCheckBox* int_training;
 		wxBitmapButton* wis_up;
-		wxStaticText* m_staticText362;
+		wxStaticText* wisV;
 		wxBitmapButton* wis_down;
 		wxStaticText* wisM;
 		wxCheckBox* wis_training;
 		wxBitmapButton* per_up;
-		wxStaticText* m_staticText363;
+		wxStaticText* perV;
 		wxBitmapButton* per_down;
-		wxStaticText* m_staticText1413;
+		wxStaticText* perM;
 		wxCheckBox* per_training;
 		wxBitmapButton* str_up;
 		wxStaticText* strV;
@@ -129,9 +131,9 @@ class window : public wxFrame
 		wxStaticText* mechanicalM;
 		wxCheckBox* mechanical_training;
 		wxCheckBox* mechanical_mastery;
-		wxStaticText* insightM;
-		wxCheckBox* insight_training;
-		wxCheckBox* insight_mastery;
+		wxStaticText* intuitionM;
+		wxCheckBox* intuition_training;
+		wxCheckBox* intuition_mastery;
 		wxStaticText* m_staticText95;
 		wxChoice* weapon;
 		wxCheckBox* weapon_training;
@@ -142,6 +144,8 @@ class window : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void save( wxCommandEvent& event ) { event.Skip(); }
+		virtual void new_char( wxCommandEvent& event ) { event.Skip(); }
+		virtual void save_as( wxCommandEvent& event ) { event.Skip(); }
 		virtual void load( wxCommandEvent& event ) { event.Skip(); }
 		virtual void increase_int( wxCommandEvent& event ) { event.Skip(); }
 		virtual void decrease_int( wxCommandEvent& event ) { event.Skip(); }
@@ -195,8 +199,8 @@ class window : public wxFrame
 		virtual void mastered_SoH( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_mechanical( wxCommandEvent& event ) { event.Skip(); }
 		virtual void mastered_mechanical( wxCommandEvent& event ) { event.Skip(); }
-		virtual void trained_insight( wxCommandEvent& event ) { event.Skip(); }
-		virtual void mastered_insight( wxCommandEvent& event ) { event.Skip(); }
+		virtual void trained_intuition( wxCommandEvent& event ) { event.Skip(); }
+		virtual void mastered_intuition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void weapon_chosen( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_weapon( wxCommandEvent& event ) { event.Skip(); }
 		virtual void armor_chosen( wxCommandEvent& event ) { event.Skip(); }
