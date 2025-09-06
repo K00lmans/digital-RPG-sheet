@@ -21,6 +21,34 @@ enum Training_Level {
     EXPERT
 };
 
+enum Attributes_And_Skills {
+    INTELLIGENCE,
+    WISDOM,
+    PERCEPTION,
+    STRENGTH,
+    PRESENCE,
+    FORTITUDE,
+    AGILITY,
+    DEXTERITY,
+    END_OF_ATTRIBUTES, // Along with END_OF_SKILLS acts as a divider
+    TEACHING,
+    DOCTORING,
+    INTIMIDATION,
+    PERFORMANCE,
+    ACROBATICS,
+    SUPERNATURALISM,
+    SURVIVAL,
+    HISTORY,
+    NEGOTIATION,
+    ATHLETICS,
+    INVESTIGATION,
+    STEALTH,
+    SLEIGHT_OF_HAND,
+    MECHANICAL,
+    INTUITION,
+    END_OF_SKILLS
+};
+
 struct Training {
     Training_Level training_level = UNTRAINED;
     unsigned int training_points = 0;
@@ -107,6 +135,18 @@ RESULT_NUMBER system_round(NUMBER num, int trailing_digits = 0) {
 template <typename NUM>
 int get_sign(NUM val) {
     return (NUM(0) < val) - (val < NUM(0));
+}
+
+// If given a string float removes all the trailing zeros after the decimal
+static std::string remove_trailing_zeros(const std::string &number_str) {
+    std::string result = number_str;
+    while (result.back() == '0') {
+        result.pop_back();
+    }
+    if (result.back() == '.') {
+        result.pop_back();
+    }
+    return result;
 }
 
 #endif //RPG_SHEET_HANDY_FUNCTIONS_H
