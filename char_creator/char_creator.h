@@ -56,7 +56,7 @@ private:
     // Attribute changes
     void change_attribute(int increment, Attributes_And_Skills chosen_attribute);
 
-    void update_attribute(const Attributes &attribute_info, const Character::Stat &chosen_attribute);
+    static void update_attribute(const Attributes &attribute_info, const Character::Stat &chosen_attribute);
 
     void increase_int(wxCommandEvent &event) override { change_attribute(1, INTELLIGENCE); }
     void decrease_int(wxCommandEvent &event) override { change_attribute(-1, INTELLIGENCE); }
@@ -77,12 +77,26 @@ private:
 
     void handle_training(bool handle_attributes = true, bool handle_skills = true);
 
+    static void update_skill(const Skills &skill_info, const Character::Stat &chosen_skill);
+
     string save_location;
     vector<Attributes> attributes = {
         {intV, intM, int_up, int_down, int_training}, {wisV, wisM, wis_up, wis_down, wis_training},
         {perV, perM, per_up, per_down, per_training}, {strV, strM, str_up, str_down, str_training},
         {preV, preM, pre_up, pre_down, pre_training}, {forV, forM, for_up, for_down, for_training},
         {agiV, agiM, agi_up, agi_down, agi_training}, {dexV, dexM, dex_up, dex_down, dex_training}
+    };
+    vector<Skills> skills = { // There has got to be a better way to do this lol
+        {teachingM, teaching_training, teaching_mastery}, {doctoringM, doctoring_training, doctoring_mastery},
+        {intimidationM, intimidation_training, intimidation_mastery},
+        {performanceM, performance_training, performance_mastery},
+        {acrobaticsM, acrobatics_trained, acrobatics_mastered},
+        {supernaturalismM, supernaturalism_training, supernaturalism_mastery},
+        {survivalM, survival_training, survival_mastery}, {historyM, history_training, history_mastery},
+        {negotiationM, negotiation_training, negotiation_mastery}, {athleticsM, athletics_training, athletics_mastery},
+        {investigationM, investigation_training, investigation_mastery}, {stealthM, stealth_training, stealth_mastery},
+        {SoHM, SoH_training, SoH_mastery}, {mechanicalM, mechanical_training, mechanical_mastery},
+        {intuitionM, intuition_training, intuition_mastery}
     };
     std::unique_ptr<Character> data = std::make_unique<Character>();
 };

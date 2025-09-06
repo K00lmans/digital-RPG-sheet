@@ -47,7 +47,11 @@ void UI::update_visuals() {
     health->SetLabel(to_string(data->get_health()) + "/" + to_string(data->get_max_health()));
     speed->SetLabel(remove_trailing_zeros(to_string(data->calculate_speed())) + "ft");
     protection_score->SetLabel(to_string(data->calculate_protection_score()));
-    // Same thing for stats
+    int data_skill = SKILL_OFFSET;
+    for (const auto &ui_skill: skills) {
+        update_skill(ui_skill, data->get_stat(static_cast<Attributes_And_Skills>(data_skill)));
+        data_skill++;
+    }
     handle_training();
 }
 
@@ -128,7 +132,6 @@ void UI::update_attribute(const Attributes &attribute_info, const Character::Sta
     attribute_info.modifier->SetLabel(
         (get_sign(chosen_attribute.modifier) == -1 ? "" : "+") + to_string(chosen_attribute.modifier));
     attribute_info.trained_check->SetValue(chosen_attribute.training_info.training_level);
-    handle_training(true, false);
 }
 
 void UI::handle_training(const bool handle_attributes, const bool handle_skills) {
@@ -146,4 +149,14 @@ void UI::handle_training(const bool handle_attributes, const bool handle_skills)
             // Enable or disable based on background
         }
     }
+}
+
+void UI::update_skill(const Skills &skill_info, const Character::Stat &chosen_skill) {
+    // Gets just the bit before the actual value
+    string modifier_string{skill_info.modifier->GetLabel().substr(0, skill_info.modifier->GetLabel().find(": ") + 2)};
+    modifier_string += get_sign(chosen_skill.modifier) == -1 ? "" : "+"; // Adds sign
+    modifier_string += to_string(chosen_skill.modifier); // And finally adds the number
+    skill_info.modifier->SetLabel(modifier_string);
+    skill_info.trained_check->SetValue(chosen_skill.training_info.training_level);
+    skill_info.mastered_check->SetValue(chosen_skill.training_info.training_level == EXPERT);
 }

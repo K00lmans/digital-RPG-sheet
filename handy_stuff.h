@@ -124,11 +124,11 @@ static std::vector<std::string> tokenize_string(const std::string &seperator, co
 
 // Rounding in my system rounds down at .5 so this handles it
 template<typename NUMBER, typename RESULT_NUMBER>
-RESULT_NUMBER system_round(NUMBER num, int trailing_digits = 0) {
+RESULT_NUMBER system_round(NUMBER num, const int trailing_digits = 0) {
     if (static_cast<int>(num * pow(10, trailing_digits + 1)) % 10 == 5) {
-        return floor(num * pow(10, trailing_digits)) / trailing_digits;
+        return floor(num * pow(10, trailing_digits)) / (trailing_digits + 1);
     }
-    return round(num * pow(10, trailing_digits)) / trailing_digits;
+    return round(num * pow(10, trailing_digits)) / (trailing_digits + 1);
 }
 
 // From the interwebs, returns 1 for positive, -1 for negative, and 0 for zero
