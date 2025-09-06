@@ -92,7 +92,7 @@ class window : public wxFrame
 		wxStaticText* teachingM;
 		wxCheckBox* teaching_training;
 		wxCheckBox* teaching_mastery;
-		wxStaticText* m_staticText1061;
+		wxStaticText* doctoringM;
 		wxCheckBox* doctoring_training;
 		wxCheckBox* doctoring_mastery;
 		wxStaticText* intimidationM;
@@ -154,6 +154,7 @@ class window : public wxFrame
 		virtual void decrease_wis( wxCommandEvent& event ) { event.Skip(); }
 		virtual void wis_trained( wxCommandEvent& event ) { event.Skip(); }
 		virtual void increase_per( wxCommandEvent& event ) { event.Skip(); }
+		virtual void decrease_per( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_per( wxCommandEvent& event ) { event.Skip(); }
 		virtual void increase_str( wxCommandEvent& event ) { event.Skip(); }
 		virtual void decrease_str( wxCommandEvent& event ) { event.Skip(); }
@@ -167,7 +168,7 @@ class window : public wxFrame
 		virtual void increase_agi( wxCommandEvent& event ) { event.Skip(); }
 		virtual void decrease_agi( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_agi( wxCommandEvent& event ) { event.Skip(); }
-		virtual void increase_dec( wxCommandEvent& event ) { event.Skip(); }
+		virtual void increase_dex( wxCommandEvent& event ) { event.Skip(); }
 		virtual void decrease_dex( wxCommandEvent& event ) { event.Skip(); }
 		virtual void trained_dex( wxCommandEvent& event ) { event.Skip(); }
 		virtual void lineage_selected( wxCommandEvent& event ) { event.Skip(); }

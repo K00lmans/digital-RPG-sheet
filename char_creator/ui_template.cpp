@@ -409,9 +409,9 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	fgSizer181->SetFlexibleDirection( wxBOTH );
 	fgSizer181->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	m_staticText1061 = new wxStaticText( this, wxID_ANY, _("Doctoring: +0"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText1061->Wrap( -1 );
-	fgSizer181->Add( m_staticText1061, 0, wxALL, 5 );
+	doctoringM = new wxStaticText( this, wxID_ANY, _("Doctoring: +0"), wxDefaultPosition, wxDefaultSize, 0 );
+	doctoringM->Wrap( -1 );
+	fgSizer181->Add( doctoringM, 0, wxALL, 5 );
 
 	doctoring_training = new wxCheckBox( this, wxID_ANY, _("T"), wxDefaultPosition, wxDefaultSize, 0 );
 	doctoring_training->Enable( false );
@@ -797,6 +797,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	wis_down->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::decrease_wis ), NULL, this );
 	wis_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::wis_trained ), NULL, this );
 	per_up->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::increase_per ), NULL, this );
+	per_down->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::decrease_per ), NULL, this );
 	per_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_per ), NULL, this );
 	str_up->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::increase_str ), NULL, this );
 	str_down->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::decrease_str ), NULL, this );
@@ -810,7 +811,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	agi_up->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::increase_agi ), NULL, this );
 	agi_down->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::decrease_agi ), NULL, this );
 	agi_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_agi ), NULL, this );
-	dex_up->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::increase_dec ), NULL, this );
+	dex_up->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::increase_dex ), NULL, this );
 	dex_down->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( window::decrease_dex ), NULL, this );
 	dex_training->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( window::trained_dex ), NULL, this );
 	lineages->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( window::lineage_selected ), NULL, this );

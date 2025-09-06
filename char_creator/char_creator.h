@@ -9,6 +9,11 @@
 #include "ui_template.h"
 #include "save_template.h"
 #include "../Character.h"
+#include "../handy_stuff.h"
+
+#define SKILL_OFFSET 9 // How much you need to add to Attributes_And_Skills to get to the skills
+
+using std::to_string;
 
 class Char_Creator final : public wxApp {
 public:
@@ -26,14 +31,16 @@ public:
         wxCheckBox *trained_check;
     };
 
-private:
-    string save_location;
-    vector<Attributes> attributes = {{intV, intM, int_up, int_down, int_training}};
+    struct Skills {
+        wxStaticText *modifier;
+        wxCheckBox *trained_check;
+        wxCheckBox *mastered_check;
+    };
 
-public:
     UI() : window(nullptr) {
     }
 
+private:
     void save(wxCommandEvent &event) override;
 
     void load(wxCommandEvent &event) override;
@@ -42,9 +49,55 @@ public:
 
     void new_char(wxCommandEvent &event) override;
 
-    // Should only be used for a full refresh, each individual update should update its own changes
-    void update_visuals() const;
+    // Calls to this should be kept to a minimum. Before calling this, make sure to save the character name if
+    // you need to
+    void update_visuals();
 
+    // Attribute changes
+    void change_attribute(int increment, Attributes_And_Skills chosen_attribute);
+
+    static void update_attribute(const Attributes &attribute_info, const Character::Stat &chosen_attribute);
+
+    void increase_int(wxCommandEvent &event) override { change_attribute(1, INTELLIGENCE); }
+    void decrease_int(wxCommandEvent &event) override { change_attribute(-1, INTELLIGENCE); }
+    void increase_wis(wxCommandEvent &event) override { change_attribute(1, WISDOM); }
+    void decrease_wis(wxCommandEvent &event) override { change_attribute(-1, WISDOM); }
+    void increase_per(wxCommandEvent &event) override { change_attribute(1, PERCEPTION); }
+    void decrease_per(wxCommandEvent &event) override { change_attribute(-1, PERCEPTION); }
+    void increase_str(wxCommandEvent &event) override { change_attribute(1, STRENGTH); }
+    void decrease_str(wxCommandEvent &event) override { change_attribute(-1, STRENGTH); }
+    void increase_pre(wxCommandEvent &event) override { change_attribute(1, PRESENCE); }
+    void decrease_pre(wxCommandEvent &event) override { change_attribute(-1, PRESENCE); }
+    void increase_for(wxCommandEvent &event) override { change_attribute(1, FORTITUDE); }
+    void decrease_for(wxCommandEvent &event) override { change_attribute(-1, FORTITUDE); }
+    void increase_agi(wxCommandEvent &event) override { change_attribute(1, AGILITY); }
+    void decrease_agi(wxCommandEvent &event) override { change_attribute(-1, AGILITY); }
+    void increase_dex(wxCommandEvent &event) override { change_attribute(1, DEXTERITY); }
+    void decrease_dex(wxCommandEvent &event) override { change_attribute(-1, DEXTERITY); }
+
+    void handle_training(bool handle_attributes = true, bool handle_skills = true);
+
+    static void update_skill(const Skills &skill_info, const Character::Stat &chosen_skill);
+
+    string save_location;
+    vector<Attributes> attributes = {
+        {intV, intM, int_up, int_down, int_training}, {wisV, wisM, wis_up, wis_down, wis_training},
+        {perV, perM, per_up, per_down, per_training}, {strV, strM, str_up, str_down, str_training},
+        {preV, preM, pre_up, pre_down, pre_training}, {forV, forM, for_up, for_down, for_training},
+        {agiV, agiM, agi_up, agi_down, agi_training}, {dexV, dexM, dex_up, dex_down, dex_training}
+    };
+    vector<Skills> skills = { // There has got to be a better way to do this lol
+        {teachingM, teaching_training, teaching_mastery}, {doctoringM, doctoring_training, doctoring_mastery},
+        {intimidationM, intimidation_training, intimidation_mastery},
+        {performanceM, performance_training, performance_mastery},
+        {acrobaticsM, acrobatics_trained, acrobatics_mastered},
+        {supernaturalismM, supernaturalism_training, supernaturalism_mastery},
+        {survivalM, survival_training, survival_mastery}, {historyM, history_training, history_mastery},
+        {negotiationM, negotiation_training, negotiation_mastery}, {athleticsM, athletics_training, athletics_mastery},
+        {investigationM, investigation_training, investigation_mastery}, {stealthM, stealth_training, stealth_mastery},
+        {SoHM, SoH_training, SoH_mastery}, {mechanicalM, mechanical_training, mechanical_mastery},
+        {intuitionM, intuition_training, intuition_mastery}
+    };
     std::unique_ptr<Character> data = std::make_unique<Character>();
 };
 

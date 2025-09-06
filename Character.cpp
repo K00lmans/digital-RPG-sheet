@@ -15,7 +15,6 @@ Character::Character() {
 void Character::save_character(const string &path) {
     json save_data;
     save_data["name"] = name;
-    save_data["speed"] = speed;
     save_data["armor_class"] = armor_class;
     save_data["lineage"] = lineage;
     save_data["background"] = background;
@@ -33,7 +32,6 @@ Character::Character(std::ifstream &char_file) {
     json save_data;
     char_file >> save_data;
     name = save_data["name"];
-    speed = save_data["speed"];
     armor_class = save_data["armor_class"];
     lineage = save_data["lineage"];
     background = save_data["background"];
@@ -42,11 +40,6 @@ Character::Character(std::ifstream &char_file) {
     health_info = save_data["health_info"];
     armor_training = save_data["armor_training"];
     weapon_training = save_data["weapon_training"];
-    int attribute_points = 90;
-    for (int attributes_i = 0; attributes_i < END_OF_ATTRIBUTES; attributes_i++) {
-        attribute_points -= attributes[attributes_i]->value.value();
-    }
-    extra_attribute_points = attribute_points;
 }
 
 Character::Character(const string &file_path) {
@@ -59,9 +52,20 @@ void Character::change_attributes(const Attributes_And_Skills attribute_to_chang
                                   const Flag flag) const {
     const auto selected_attribute = attributes[attribute_to_change];
     if (flag == CHANGE_TO) {
-        selected_attribute->value = modification_value;
+        if (modification_value >= 20) {
+            selected_attribute->value = 20;
+        } else if (modification_value <= 1) {
+            selected_attribute->value = 1;
+        } else {
+            selected_attribute->value = modification_value;
+        }
     } else if (flag == ADD_TO) {
         selected_attribute->value.value() += modification_value;
+        if (selected_attribute->value.value() > 20) {
+            selected_attribute->value = 20;
+        } else if (selected_attribute->value.value() < 1) {
+            selected_attribute->value = 1;
+        }
     }
     attribute_update(selected_attribute);
 }
@@ -317,4 +321,12 @@ void from_json(const json &j, shared_ptr<Character::Stat> &stat) {
     } else {
         stat->value = std::nullopt;
     }
+}
+
+int Character::calculate_remaining_points() const {
+    int remaining_points = 90;
+    for (int attribute = 0; attribute < END_OF_ATTRIBUTES; attribute++) {
+        remaining_points -= attributes[attribute]->value.value();
+    }
+    return remaining_points;
 }

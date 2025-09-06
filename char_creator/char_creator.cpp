@@ -36,29 +36,23 @@ void UI::save_as(wxCommandEvent &event) {
     }
 }
 
-void UI::update_visuals() const {
+void UI::update_visuals() {
     char_name->SetValue(data->name);
     int data_attribute = 0;
     for (const auto &ui_attribute: attributes) {
-        // What a mess lol
-        ui_attribute.value->SetLabel(
-            std::to_string(
-                data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).value.value()));
-        ui_attribute.modifier->SetLabel(
-            get_sign(data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).modifier) == -1
-                ? "-"
-                : "+" + std::to_string(
-                      data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).modifier));
-        ui_attribute.trained_check->SetValue(
-            data->get_stat(static_cast<Character::Attributes_And_Skills>(data_attribute)).training_info.training_level);
-        if (data->lineage.empty()) {
-            ui_attribute.trained_check->Disable();
-        } else {
-            // Enable or disable based on lineage
-        }
+        update_attribute(ui_attribute, data->get_stat(static_cast<Attributes_And_Skills>(data_attribute)));
         data_attribute++;
     }
-    // Same thing for stats
+    remaining_points->SetLabel(to_string(data->calculate_remaining_points()));
+    health->SetLabel(to_string(data->get_health()) + "/" + to_string(data->get_max_health()));
+    speed->SetLabel(remove_trailing_zeros(to_string(data->calculate_speed())) + "ft");
+    protection_score->SetLabel(to_string(data->calculate_protection_score()));
+    int data_skill = SKILL_OFFSET;
+    for (const auto &ui_skill: skills) {
+        update_skill(ui_skill, data->get_stat(static_cast<Attributes_And_Skills>(data_skill)));
+        data_skill++;
+    }
+    handle_training();
 }
 
 void Save_Window::saved(wxCommandEvent &event) {
@@ -124,4 +118,45 @@ string Load_Window::get_selected_file() const {
         return {};
     }
     return static_cast<string>(file_selection->GetString(selection));
+}
+
+void UI::change_attribute(const int increment, const Attributes_And_Skills chosen_attribute) {
+    data->name = char_name->GetValue();
+    data->change_attributes(chosen_attribute, increment, Character::ADD_TO);
+    data->update_skills();
+    update_visuals(); // As changing an attribute has a massive knock-on effect, just call this
+}
+
+void UI::update_attribute(const Attributes &attribute_info, const Character::Stat &chosen_attribute) {
+    attribute_info.value->SetLabel(to_string(chosen_attribute.value.value()));
+    attribute_info.modifier->SetLabel(
+        (get_sign(chosen_attribute.modifier) == -1 ? "" : "+") + to_string(chosen_attribute.modifier));
+    attribute_info.trained_check->SetValue(chosen_attribute.training_info.training_level);
+}
+
+void UI::handle_training(const bool handle_attributes, const bool handle_skills) {
+    if (handle_attributes) {
+        if (data->lineage.empty()) {
+            // Disable all attribute training checks
+        } else {
+            // Enable or disable based on lineage
+        }
+    }
+    if (handle_skills) {
+        if (data->background.empty()) {
+            // Disable all skill training checks
+        } else {
+            // Enable or disable based on background
+        }
+    }
+}
+
+void UI::update_skill(const Skills &skill_info, const Character::Stat &chosen_skill) {
+    // Gets just the bit before the actual value
+    string modifier_string{skill_info.modifier->GetLabel().substr(0, skill_info.modifier->GetLabel().find(": ") + 2)};
+    modifier_string += get_sign(chosen_skill.modifier) == -1 ? "" : "+"; // Adds sign
+    modifier_string += to_string(chosen_skill.modifier); // And finally adds the number
+    skill_info.modifier->SetLabel(modifier_string);
+    skill_info.trained_check->SetValue(chosen_skill.training_info.training_level);
+    skill_info.mastered_check->SetValue(chosen_skill.training_info.training_level == EXPERT);
 }

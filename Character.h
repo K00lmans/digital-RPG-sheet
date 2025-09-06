@@ -51,34 +51,6 @@ public:
         HIGHEST // Stat is determined by picking from the highest and lowest, takes precedent
     };
 
-    enum Attributes_And_Skills {
-        INTELLIGENCE,
-        WISDOM,
-        PERCEPTION,
-        STRENGTH,
-        PRESENCE,
-        FORTITUDE,
-        AGILITY,
-        DEXTERITY,
-        END_OF_ATTRIBUTES, // Along with END_OF_SKILLS acts as a divider
-        TEACHING,
-        DOCTORING,
-        INTIMIDATION,
-        PERFORMANCE,
-        ACROBATICS,
-        SUPERNATURALISM,
-        SURVIVAL,
-        HISTORY,
-        NEGOTIATION,
-        ATHLETICS,
-        INVESTIGATION,
-        STEALTH,
-        SLEIGHT_OF_HAND,
-        MECHANICAL,
-        INTUITION,
-        END_OF_SKILLS
-    };
-
     // Attributes and skills have several elements inside of them, this struct contains all those values
     struct Stat {
         mutable int modifier = 0;
@@ -201,14 +173,15 @@ public:
 
     [[nodiscard]] unsigned int get_temp_health() const;
 
-    void update_skills() ;
+    void update_skills();
 
     // Returns a deep copy of a stat to prevent editing
     [[nodiscard]] Stat get_stat(Attributes_And_Skills thing_to_get) const;
 
+    double calculate_speed() const { return 15 + 2.5 * attributes.agility->modifier; }
+    int calculate_remaining_points() const;
+
     std::string name{};
-    int extra_attribute_points = 10;
-    double speed = 15;
     Armor_Class armor_class = NONE;
     string lineage{};
     string background{};
@@ -222,7 +195,8 @@ private:
     void update_single_stat(Attributes_And_Skills thing_to_update);
 
     // Updates the scores of those stats that just average several attributes
-    static void skill_with_just_averages(const shared_ptr<Stat> &skill, const vector<shared_ptr<Stat>> &attributes_to_average);
+    static void skill_with_just_averages(const shared_ptr<Stat> &skill,
+                                         const vector<shared_ptr<Stat> > &attributes_to_average);
 
     // Returns lowest value of untrained, as that is how the rules are modified if untrained. Additionally, this
     // function was made with the help of AI
@@ -230,7 +204,7 @@ private:
     static shared_ptr<Stat> get_highest(const SET &options, Training_Level training_level) {
         // This is utter witchcraft to me. Anyway this lets us use both shared_ptr and referenced values
         auto get_modifier = [](const auto value) -> int {
-            if constexpr (std::is_convertible_v<typename SET::value_type, shared_ptr<Stat>>) {
+            if constexpr (std::is_convertible_v<typename SET::value_type, shared_ptr<Stat> >) {
                 return value->modifier;
             } else {
                 return value.modifier;
@@ -250,7 +224,7 @@ private:
         auto selection = training_level == UNTRAINED ? highest_value : lowest_value;
 
         // So much witchcraft. Anyway, just makes sure the return type is shared_ptr
-        if constexpr (std::is_convertible_v<typename SET::value_type, shared_ptr<Stat>>) {
+        if constexpr (std::is_convertible_v<typename SET::value_type, shared_ptr<Stat> >) {
             return *selection;
         } else {
             return make_shared<Stat>(*selection);
@@ -267,6 +241,7 @@ private:
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Training, training_level, training_points)
 
 void to_json(json &j, const shared_ptr<Character::Stat> &stat);
+
 void from_json(const json &j, const shared_ptr<Character::Stat> &stat);
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Character::Attributes, intelligence, wisdom, perception, strength, presence,
