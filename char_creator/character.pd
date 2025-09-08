@@ -1,0 +1,104 @@
+{
+  "lineages": [
+    {
+      "shelldwellers": [
+        {
+          "health_die": 30,
+          "limitations": [
+            {
+              "good": [
+                "agi2"
+              ],
+              "bad": [
+                "for2"
+              ]
+            }
+          ],
+          "description": "This lineage is a D30 lineage with the low and high magic tags. It is that of a turtle or tortoise humanoid, with a large shell on its back and roughly green skin. To pick this lineage agility cannot be one of your two lowest stats, and vice versa for fortitude. As this lineage you get the special ability to go into or out of your shell; for one action you can do so. When you are inside your shell, your movement is zero but you get a +5 to your protection score. You also gain training in fortitude.",
+          "training": [
+            "for"
+          ]
+        }
+      ],
+      "beshrewn": [
+        {
+          "health_die": 16,
+          "limitations": [
+            {
+              "bad": [
+                "pre2",
+                "int2",
+                "for2"
+              ]
+            }
+          ],
+          "description": "This lineage is a D16 lineage with the low and high magic tags, that gives training in either presence, intelligence or fortitude. You can not pick this lineage if any of those stats is among your two lowest stats. Beshrewn resist chilling and depressing damage, while being weak to hearing and impaling damage. Beshrewn have two subraces, Beshrewn-Maffei and Beshrewn-Razione. Beshrewn-Maffei are humanoid mice who average about 4 feet tall, with large circular ears and who tend to form mafia-like social circles with other Beshrewn. Beshrewn-Maffei’s special ability is that they do not trigger reactions while an ally is next to them. Beshrewn-Razione are sentient mice or rats. Their special ability is that when training in a formation everyone gains double points and they skip the initial roll to learn a formation.",
+          "training": [
+            "pre",
+            "int",
+            "for"
+          ]
+        }
+      ],
+      "human": [
+        {
+          "health_die": 20,
+          "limitations": [
+            {
+              "value": [
+                "any1",
+                "any20"
+              ]
+            }
+          ],
+          "description": "This lineage is a D20 lineage. It is that of your stereotypical human. To pick this lineage, you must not have a 1 or a 20 in any attribute. As this lineage you get the special ability that whenever you gain training points, you gain 1 extra. You become trained in one attribute of your choice.",
+          "training": [
+            "any"
+          ]
+        }
+      ]
+    }
+  ],
+  "backgrounds": [
+    {
+      "tradesperson": [
+        {
+          "health_die": 8,
+          "description": "This background is a D8 background. In this background you apprenticed yourself early to a tradesperson learning the skills you needed for the job until eventually you knew enough to become a tradesperson yourself. You become an expert in a skill of your choice and gain a weapon based off of your job (hammer for a blacksmith, scythe for a farmer etc) which you are trained in. You then get an armor of your choice that you are not trained in.",
+          "training": [
+            {
+              "weapon": "any",
+              "expert": "any"
+            }
+          ]
+        }
+      ],
+      "royalty": [
+        {
+          "health_die": 6,
+          "limitations": [
+            {
+              "value": "pre18l"
+            }
+          ],
+          "description": "This background is a d6 background. If you come from this background you came from some kind of royal family, whether it be you were a member of a royal court, some small noble, or even a higher noble if not king or queen. You start off with your choice of medium armor and sword which you are trained in, as well as being trained in either intimidation, deception/performance, negotiation, or history as well as one skill of your choice. You must have a presence of +4 or higher to take this background.",
+          "training": [
+            {
+              "weapon": "any",
+              "armor": "medium",
+              "skill": [
+                "any",
+                [
+                  "intimidation",
+                  "performance",
+                  "negotiation",
+                  "history"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

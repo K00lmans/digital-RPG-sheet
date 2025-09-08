@@ -1,0 +1,44 @@
+{
+  "weapons": [
+    {
+      "basic": [],
+      "simple": [
+        {
+          "scythe": {},
+          "hammer": {}
+        }
+      ],
+      "advanced": [
+        {
+          "assassins_spike": {}
+        }
+      ],
+      "complicated": []
+    }
+  ],
+  "armor": [
+    {
+      "light_armor": [
+        {
+          "leather_armor": {}
+        }
+      ],
+      "medium_armor": [],
+      "heavy_armor": []
+    }
+  ],
+  "bags": [
+    {
+      "scabbard/holster": {},
+      "backpack": {},
+      "coin_pouch": {}
+    }
+  ],
+  "other": [
+    {
+      "adrenaline_shot": {},
+      "bandages": {},
+      "spellbook": {}
+    }
+  ]
+}
