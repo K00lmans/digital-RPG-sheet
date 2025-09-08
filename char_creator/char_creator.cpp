@@ -31,7 +31,7 @@ void UI::new_char(wxCommandEvent &event) {
 
 void UI::save_as(wxCommandEvent &event) {
     if (Save_Window dialog(this); dialog.ShowModal() == wxID_OK) {
-        save_location = SAVE_LOCATION + dialog.get_file_name() + ".char";
+        save_location = SAVE_LOCATION + dialog.get_file_name() + ".cha";
         save(event);
     }
 }
@@ -77,7 +77,7 @@ void Load_Window::get_files() const {
 
     file_selection->Clear();
     for (const auto &file: std::filesystem::directory_iterator(SAVE_LOCATION)) {
-        if (file.path().extension().string() == ".char") {
+        if (file.path().extension().string() == ".char" || file.path().extension().string() == ".cha") {
             file_selection->Append(file.path().string());
         }
     }
