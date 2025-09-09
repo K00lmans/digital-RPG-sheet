@@ -146,11 +146,11 @@ public:
 
     Character(); // Assumes default values
 
-    explicit Character(std::ifstream &char_file);
+    explicit Character(std::ifstream char_file);
 
     void save_character(const string &path);
 
-    explicit Character(const string &file_path);
+    explicit Character(const string &file_path) : Character(std::ifstream(file_path)) {}
 
     // Skills are based on attributes and therefore this does not need to be a general function
     void change_attributes(Attributes_And_Skills attribute_to_change, int modification_value,

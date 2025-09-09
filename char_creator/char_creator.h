@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <memory>
 #include <filesystem>
+#include <vector>
 
 #include "load_template.h"
 #include "ui_template.h"
@@ -12,8 +13,11 @@
 #include "../handy_stuff.h"
 
 #define SKILL_OFFSET 9 // How much you need to add to Attributes_And_Skills to get to the skills
+#define SAVE_LOCATION find_folder("saves", fs::current_path())
 
 using std::to_string;
+using std::vector;
+namespace fs = std::filesystem;
 
 class Char_Creator final : public wxApp {
 public:
@@ -116,7 +120,7 @@ public:
 class Load_Window final : public load_dialog {
     // Puts all the files of the correct time that are in the saves folder into the selection wheel. Made with
     // help from AI
-    void get_files() const;
+    void get_files();
 
     void update_error(const string &new_error);
 
@@ -126,6 +130,7 @@ class Load_Window final : public load_dialog {
 
     string error;
     string selected_file;
+    vector<string> file_paths;
 
 public:
     explicit Load_Window(wxWindow *parent) : load_dialog(parent) {

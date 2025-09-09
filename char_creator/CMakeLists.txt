@@ -16,15 +16,3 @@ find_package(wxWidgets CONFIG REQUIRED)
 target_link_libraries(char_creator PRIVATE wx::core wx::base)
 find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(char_creator PRIVATE nlohmann_json::nlohmann_json)
-
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    # Set this to where you have created the saves folder
-    add_compile_definitions(char_creator.cpp PRIVATE SAVE_LOCATION="../../saves/")
-    # Set these to be referenced from your build/deployment directory
-    add_compile_definitions(char_creator.cpp PRIVATE ITEM_DATA_LOCATION="../../items.pd")
-    add_compile_definitions(char_creator.cpp PRIVATE ITEM_DATA_LOCATION="../../character.pd")
-else ()
-    add_compile_definitions(char_creator.cpp PRIVATE SAVE_LOCATION="../saves/")
-    add_compile_definitions(char_creator.cpp PRIVATE ITEM_DATA_LOCATION="items.pd")
-    add_compile_definitions(char_creator.cpp PRIVATE ITEM_DATA_LOCATION="character.pd")
-endif ()

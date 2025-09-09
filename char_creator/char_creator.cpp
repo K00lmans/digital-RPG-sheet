@@ -19,19 +19,22 @@ void UI::save(wxCommandEvent &event) {
 void UI::load(wxCommandEvent &event) {
     if (Load_Window dialog(this); dialog.ShowModal() == wxID_OK) {
         save_location = dialog.get_selected_file();
-        data = std::make_unique<Character>(save_location);
-        update_visuals();
+        if (!save_location.empty()) { // If nothing is loaded, do nothing
+            data = std::make_unique<Character>(save_location);
+            update_visuals();
+        }
     }
 }
 
 void UI::new_char(wxCommandEvent &event) {
+    save_location.clear();
     data = std::make_unique<Character>();
     update_visuals();
 }
 
 void UI::save_as(wxCommandEvent &event) {
     if (Save_Window dialog(this); dialog.ShowModal() == wxID_OK) {
-        save_location = SAVE_LOCATION + dialog.get_file_name() + ".char";
+        save_location = SAVE_LOCATION.string() + "/" + dialog.get_file_name() + ".cha";
         save(event);
     }
 }
@@ -71,14 +74,15 @@ void Load_Window::update_error(const string &new_error) {
     }
 }
 
-void Load_Window::get_files() const {
+void Load_Window::get_files() {
     // Setup to save selection data
     const auto selection = file_selection->GetStringSelection();
 
     file_selection->Clear();
-    for (const auto &file: std::filesystem::directory_iterator(SAVE_LOCATION)) {
-        if (file.path().extension().string() == ".char") {
-            file_selection->Append(file.path().string());
+    for (const auto &file: fs::directory_iterator(SAVE_LOCATION)) {
+        if (file.path().extension().string() == ".char" || file.path().extension().string() == ".cha") {
+            file_paths.push_back(fs::relative(file.path(), fs::current_path()).string());
+            file_selection->Append(fs::relative(file.path(), SAVE_LOCATION).stem().string());
         }
     }
 
@@ -117,7 +121,7 @@ string Load_Window::get_selected_file() const {
     if (selection == wxNOT_FOUND) {
         return {};
     }
-    return static_cast<string>(file_selection->GetString(selection));
+    return file_paths[selection];
 }
 
 void UI::change_attribute(const int increment, const Attributes_And_Skills chosen_attribute) {
