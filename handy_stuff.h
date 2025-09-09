@@ -7,6 +7,7 @@
 
 #include <string>
 #include <chrono>
+#include <filesystem>
 
 enum Armor_Class {
     NONE,
@@ -147,6 +148,19 @@ static std::string remove_trailing_zeros(const std::string &number_str) {
         result.pop_back();
     }
     return result;
+}
+
+// Searches in an upward direction for the chosen folder
+static std::filesystem::path find_folder(const std::string &file_name, const std::filesystem::path &current_folder) {
+    if (current_folder.empty()) {
+        return current_folder;
+    }
+    for (const auto &file : std::filesystem::directory_iterator(current_folder)) {
+        if (is_directory(file) && file.path().filename() == file_name) {
+            return file.path();
+        }
+    }
+    return find_folder(file_name, current_folder.parent_path());
 }
 
 #endif //RPG_SHEET_HANDY_FUNCTIONS_H

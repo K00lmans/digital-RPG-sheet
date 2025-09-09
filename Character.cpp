@@ -28,7 +28,7 @@ void Character::save_character(const string &path) {
     output_file.close();
 }
 
-Character::Character(std::ifstream &char_file) {
+Character::Character(std::ifstream char_file) {
     json save_data;
     char_file >> save_data;
     name = save_data["name"];
@@ -40,12 +40,6 @@ Character::Character(std::ifstream &char_file) {
     health_info = save_data["health_info"];
     armor_training = save_data["armor_training"];
     weapon_training = save_data["weapon_training"];
-}
-
-Character::Character(const string &file_path) {
-    std::ifstream save_file(file_path);
-    *this = Character(save_file);
-    save_file.close();
 }
 
 void Character::change_attributes(const Attributes_And_Skills attribute_to_change, int modification_value,
