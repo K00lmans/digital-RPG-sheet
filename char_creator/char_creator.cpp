@@ -34,7 +34,7 @@ void UI::new_char(wxCommandEvent &event) {
 
 void UI::save_as(wxCommandEvent &event) {
     if (Save_Window dialog(this); dialog.ShowModal() == wxID_OK) {
-        save_location = SAVE_LOCATION.string() + "/" + dialog.get_file_name() + ".cha";
+        save_location = SAVE_LOCATION.value().string() + "/" + dialog.get_file_name() + ".cha";
         save(event);
     }
 }
@@ -79,10 +79,10 @@ void Load_Window::get_files() {
     const auto selection = file_selection->GetStringSelection();
 
     file_selection->Clear();
-    for (const auto &file: fs::directory_iterator(SAVE_LOCATION)) {
+    for (const auto &file: fs::directory_iterator(SAVE_LOCATION.value())) {
         if (file.path().extension().string() == ".char" || file.path().extension().string() == ".cha") {
             file_paths.push_back(fs::relative(file.path(), fs::current_path()).string());
-            file_selection->Append(fs::relative(file.path(), SAVE_LOCATION).stem().string());
+            file_selection->Append(fs::relative(file.path(), SAVE_LOCATION.value()).stem().string());
         }
     }
 

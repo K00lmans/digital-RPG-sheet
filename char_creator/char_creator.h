@@ -13,7 +13,9 @@
 #include "../handy_stuff.h"
 
 #define SKILL_OFFSET 9 // How much you need to add to Attributes_And_Skills to get to the skills
-#define SAVE_LOCATION find_folder("saves", fs::current_path())
+#define SAVE_LOCATION find_file("saves", fs::current_path())
+#define ITEM_DATA_LOCATION find_file("items.pd", fs::current_path())
+#define CHAR_CREATION_DATA_LOCATION find_file("character.pd", fs::current_path())
 
 using std::to_string;
 using std::vector;
