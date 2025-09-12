@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <vector>
 #include <optional>
+#include <cstring>
 #include "../handy_stuff.h"
 
 #define NO_FLAGS 0 // Makes it more clear when passing no flag into libzip functions
