@@ -7,6 +7,7 @@
 
 #include <string>
 #include <chrono>
+#include <cmath>
 #include <filesystem>
 
 enum Armor_Class {

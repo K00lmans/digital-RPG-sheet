@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
+// C++ code generated with wxFormBuilder (version 4.2.1-111-g5faebfea)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -19,7 +19,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	wxStaticBoxSizer* sbSizer13;
-	sbSizer13 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Name") ), wxVERTICAL );
+	sbSizer13 = new wxStaticBoxSizer( wxVERTICAL, this, _("Name") );
 
 	sbSizer13->SetMinSize( wxSize( 200,-1 ) );
 	char_name = new wxTextCtrl( sbSizer13->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
@@ -50,7 +50,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12 = new wxBoxSizer( wxHORIZONTAL );
 
 	wxStaticBoxSizer* sbSizer1411;
-	sbSizer1411 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Int") ), wxVERTICAL );
+	sbSizer1411 = new wxStaticBoxSizer( wxVERTICAL, this, _("Int") );
 
 	int_up = new wxBitmapButton( sbSizer1411->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -79,7 +79,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12->Add( sbSizer1411, 1, 0, 5 );
 
 	wxStaticBoxSizer* sbSizer1412;
-	sbSizer1412 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Wis") ), wxVERTICAL );
+	sbSizer1412 = new wxStaticBoxSizer( wxVERTICAL, this, _("Wis") );
 
 	wis_up = new wxBitmapButton( sbSizer1412->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -108,7 +108,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12->Add( sbSizer1412, 1, 0, 5 );
 
 	wxStaticBoxSizer* sbSizer1413;
-	sbSizer1413 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Per") ), wxVERTICAL );
+	sbSizer1413 = new wxStaticBoxSizer( wxVERTICAL, this, _("Per") );
 
 	per_up = new wxBitmapButton( sbSizer1413->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -137,7 +137,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12->Add( sbSizer1413, 1, 0, 5 );
 
 	wxStaticBoxSizer* sbSizer1415;
-	sbSizer1415 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Str") ), wxVERTICAL );
+	sbSizer1415 = new wxStaticBoxSizer( wxVERTICAL, this, _("Str") );
 
 	str_up = new wxBitmapButton( sbSizer1415->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -166,7 +166,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12->Add( sbSizer1415, 1, 0, 5 );
 
 	wxStaticBoxSizer* sbSizer1416;
-	sbSizer1416 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Pre") ), wxVERTICAL );
+	sbSizer1416 = new wxStaticBoxSizer( wxVERTICAL, this, _("Pre") );
 
 	pre_up = new wxBitmapButton( sbSizer1416->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -195,7 +195,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12->Add( sbSizer1416, 1, 0, 5 );
 
 	wxStaticBoxSizer* sbSizer1417;
-	sbSizer1417 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("For") ), wxVERTICAL );
+	sbSizer1417 = new wxStaticBoxSizer( wxVERTICAL, this, _("For") );
 
 	for_up = new wxBitmapButton( sbSizer1417->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -224,7 +224,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12->Add( sbSizer1417, 1, 0, 5 );
 
 	wxStaticBoxSizer* sbSizer141;
-	sbSizer141 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Agi") ), wxVERTICAL );
+	sbSizer141 = new wxStaticBoxSizer( wxVERTICAL, this, _("Agi") );
 
 	agi_up = new wxBitmapButton( sbSizer141->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -253,7 +253,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer12->Add( sbSizer141, 1, 0, 5 );
 
 	wxStaticBoxSizer* sbSizer1414;
-	sbSizer1414 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Dex") ), wxVERTICAL );
+	sbSizer1414 = new wxStaticBoxSizer( wxVERTICAL, this, _("Dex") );
 
 	dex_up = new wxBitmapButton( sbSizer1414->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
@@ -294,14 +294,14 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer24->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer33;
-	sbSizer33 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Remaining Points") ), wxVERTICAL );
+	sbSizer33 = new wxStaticBoxSizer( wxVERTICAL, this, _("Remaining Points") );
 
 	remaining_points = new wxStaticText( sbSizer33->GetStaticBox(), wxID_ANY, _("10"), wxDefaultPosition, wxDefaultSize, 0 );
 	remaining_points->Wrap( -1 );
 	sbSizer33->Add( remaining_points, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
-	bSizer24->Add( sbSizer33, 1, 0, 5 );
+	bSizer24->Add( sbSizer33, 1, wxEXPAND, 5 );
 
 
 	bSizer24->Add( 0, 0, 1, wxEXPAND, 5 );
@@ -313,7 +313,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer26 = new wxBoxSizer( wxVERTICAL );
 
 	wxStaticBoxSizer* sbSizer58;
-	sbSizer58 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Health") ), wxVERTICAL );
+	sbSizer58 = new wxStaticBoxSizer( wxVERTICAL, this, _("Health") );
 
 	health = new wxStaticText( sbSizer58->GetStaticBox(), wxID_ANY, _("0/0"), wxDefaultPosition, wxDefaultSize, 0 );
 	health->Wrap( -1 );
@@ -323,7 +323,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer26->Add( sbSizer58, 1, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer59;
-	sbSizer59 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Speed") ), wxVERTICAL );
+	sbSizer59 = new wxStaticBoxSizer( wxVERTICAL, this, _("Speed") );
 
 	speed = new wxStaticText( sbSizer59->GetStaticBox(), wxID_ANY, _("15ft"), wxDefaultPosition, wxDefaultSize, 0 );
 	speed->Wrap( -1 );
@@ -333,7 +333,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	bSizer26->Add( sbSizer59, 1, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer60;
-	sbSizer60 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Protection Score") ), wxVERTICAL );
+	sbSizer60 = new wxStaticBoxSizer( wxVERTICAL, this, _("Protection Score") );
 
 	protection_score = new wxStaticText( sbSizer60->GetStaticBox(), wxID_ANY, _("1"), wxDefaultPosition, wxDefaultSize, 0 );
 	protection_score->Wrap( -1 );
@@ -349,7 +349,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	fgSizer2->Add( bSizer13, 1, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer57;
-	sbSizer57 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Lineages") ), wxVERTICAL );
+	sbSizer57 = new wxStaticBoxSizer( wxVERTICAL, this, _("Lineages") );
 
 	wxArrayString lineagesChoices;
 	lineages = new wxChoice( sbSizer57->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, lineagesChoices, 0 );
@@ -360,7 +360,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	fgSizer2->Add( sbSizer57, 1, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer56;
-	sbSizer56 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Description") ), wxVERTICAL );
+	sbSizer56 = new wxStaticBoxSizer( wxVERTICAL, this, _("Description") );
 
 	lineage_description = new wxStaticText( sbSizer56->GetStaticBox(), wxID_ANY, _("Please Select a Lineage"), wxDefaultPosition, wxDefaultSize, 0 );
 	lineage_description->Wrap( 200 );
@@ -755,7 +755,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	fgSizer2->Add( bSizer87, 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 
 	wxStaticBoxSizer* sbSizer571;
-	sbSizer571 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Backgrounds") ), wxVERTICAL );
+	sbSizer571 = new wxStaticBoxSizer( wxVERTICAL, this, _("Backgrounds") );
 
 	wxArrayString backgroundsChoices;
 	backgrounds = new wxChoice( sbSizer571->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, backgroundsChoices, 0 );
@@ -766,7 +766,7 @@ window::window( wxWindow* parent, wxWindowID id, const wxString& title, const wx
 	fgSizer2->Add( sbSizer571, 1, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer561;
-	sbSizer561 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Description") ), wxVERTICAL );
+	sbSizer561 = new wxStaticBoxSizer( wxVERTICAL, this, _("Description") );
 
 	background_description = new wxStaticText( sbSizer561->GetStaticBox(), wxID_ANY, _("Please Select a Background"), wxDefaultPosition, wxDefaultSize, 0 );
 	background_description->Wrap( 200 );
