@@ -14,7 +14,7 @@ Once you have the files, you must install the dependencies for this program. The
 > [!WARNING]
 > I personally use CLion to automatically manage all of these things and therefore can not provide specific help on how to do it manually.
 
-Once you have the files on your computer, you must create a folder called `saves` somewhere in your filesystem. Then you must change the macro in the [CMake file for the character creator](char_creator/CMakeLists.txt) to instead reference where you put the `saves` folder. Additionally, in the same CMake file you need to change the reference for them [item data file](items.pd) to reference from your build/run directory to the codebase directory.
+Once you have the files on your computer, you must create a folder called `saves` somewhere in your filesystem. This file must be somewhere above your build/deployment folder for it to be found by the program.
 
 ## Roadmap
 - [ ] [Version 1.0](https://github.com/K00lmans/digital-RPG-sheet/milestone/5)
