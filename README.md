@@ -14,7 +14,7 @@ Once you have the files, you must install the dependencies for this program. The
 > [!WARNING]
 > I personally use CLion to automatically manage all of these things and therefore can not provide specific help on how to do it manually.
 
-Once you have the files on your computer, you must create a folder called `saves` somewhere in your filesystem. This file must be somewhere above your build/deployment folder for it to be found by the program.
+Once you have the files on your computer, you must create a folder called `saves` somewhere in your filesystem. This file is searched for recusivly so try to keep the folder near your execution location.
 
 ## Roadmap
 - [ ] [Version 1.0](https://github.com/K00lmans/digital-RPG-sheet/milestone/5)
