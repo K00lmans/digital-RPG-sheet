@@ -57,7 +57,7 @@ struct Training {
 
 template<class ITEM, class SEARCHABLE>
 static bool contains(ITEM item, SEARCHABLE searchable) {
-    for (auto searchable_item : searchable) {
+    for (auto searchable_item: searchable) {
         if (item == searchable_item) {
             return true;
         }
@@ -72,14 +72,14 @@ struct Error {
 };
 
 template<typename NUMBER>
-static int count_digits(NUMBER num) {
+constexpr int count_digits(NUMBER num) {
     std::abs(num); // Prevents the negative sign
     const std::string str_num = std::to_string(num);
     // The second half removes the decimal from the count in case of a float
     return static_cast<int>(str_num.length()) - contains('.', str_num);
 }
 
-static int replace_substring(std::string &string, const std::string &substring, const std::string &new_string) {
+constexpr int replace_substring(std::string &string, const std::string &substring, const std::string &new_string) {
     int substrings_replaced = 0;
     size_t position = 0;
     const size_t substring_length = new_string.length();
@@ -96,7 +96,7 @@ static int replace_substring(std::string &string, const std::string &substring, 
 
 // I find most C++ sleep functions kinda sucky, so I like to make my own instead
 template<typename NUMBER>
-static void sleep(const NUMBER sleep_time) {
+constexpr void sleep(const NUMBER sleep_time) {
     static unsigned short f1 = 0, f2 = 1; // I like to do Fibonacci to pass the time
     const auto start_time = std::chrono::high_resolution_clock::now();
     std::chrono::duration<NUMBER> elapsed_time{};
@@ -108,7 +108,7 @@ static void sleep(const NUMBER sleep_time) {
 }
 
 // Separates a string into a bunch of strings by a seperator. Result does not include the seperator
-static std::vector<std::string> tokenize_string(const std::string &seperator, const std::string &input) {
+constexpr std::vector<std::string> tokenize_string(const std::string &seperator, const std::string &input) {
     std::vector<std::string> tokens;
     std::string current_working_string = input;
     while (true) {
@@ -125,7 +125,7 @@ static std::vector<std::string> tokenize_string(const std::string &seperator, co
 
 // Rounding in my system rounds down at .5 so this handles it
 template<typename NUMBER, typename RESULT_NUMBER>
-RESULT_NUMBER system_round(NUMBER num, const int trailing_digits = 0) {
+constexpr RESULT_NUMBER system_round(NUMBER num, const int trailing_digits = 0) {
     if (static_cast<int>(num * pow(10, trailing_digits + 1)) % 10 == 5) {
         return floor(num * pow(10, trailing_digits)) / (trailing_digits + 1);
     }
@@ -133,13 +133,13 @@ RESULT_NUMBER system_round(NUMBER num, const int trailing_digits = 0) {
 }
 
 // From the interwebs, returns 1 for positive, -1 for negative, and 0 for zero
-template <typename NUM>
-int get_sign(NUM val) {
+template<typename NUM>
+constexpr int get_sign(NUM val) {
     return (NUM(0) < val) - (val < NUM(0));
 }
 
 // If given a string float removes all the trailing zeros after the decimal
-static std::string remove_trailing_zeros(const std::string &number_str) {
+constexpr std::string remove_trailing_zeros(const std::string &number_str) {
     std::string result = number_str;
     while (result.back() == '0') {
         result.pop_back();
@@ -150,17 +150,23 @@ static std::string remove_trailing_zeros(const std::string &number_str) {
     return result;
 }
 
-// Searches in an upward direction for the chosen folder
-static std::filesystem::path find_folder(const std::string &file_name, const std::filesystem::path &current_folder) {
+// Searches for the chosen file
+constexpr std::optional<std::filesystem::path> find_file(const std::string &file_name,
+                                                      const std::filesystem::path &current_folder) {
     if (current_folder.empty()) {
-        return current_folder;
+        return std::nullopt;
     }
-    for (const auto &file : std::filesystem::directory_iterator(current_folder)) {
-        if (is_directory(file) && file.path().filename() == file_name) {
+    for (const auto &file: std::filesystem::directory_iterator(current_folder)) {
+        if (file.path().filename() == file_name) {
             return file.path();
         }
+        if (file.is_directory()) {
+            if (auto result = find_file(file_name, file.path()); result.has_value()) {
+                return result;
+            }
+        }
     }
-    return find_folder(file_name, current_folder.parent_path());
+    return find_file(file_name, current_folder.parent_path());
 }
 
 #endif //RPG_SHEET_HANDY_FUNCTIONS_H
